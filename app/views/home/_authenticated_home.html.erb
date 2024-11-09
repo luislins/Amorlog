@@ -1,37 +1,71 @@
 <div class="flex flex-col items-center justify-center py-16 px-6">
   <!-- Saudação -->
   <h1 class="text-5xl font-bold text-white mb-6 text-center">
-    Bem-vindo de volta, <span class="text-loveRed"><%= current_user.couple.partner_1 %></span> e <span class="text-loveRed"><%= current_user.couple.partner_2 %></span>!
+    Bem-vindo de volta, <span class="text-loveRed"><%= current_user.couple.partner_1 %></span> 
+    e <span class="text-loveRed"><%= current_user.couple.partner_2 %></span>!
   </h1>
-  <p class="text-lg mb-8 text-gray-300 text-center">Prontos para organizar mais um momento especial juntos?</p>
+  <p class="text-lg mb-8 text-gray-300 text-center">Que tal organizar mais um momento especial juntos?</p>
+
+  <!-- Contador de Tempo Dinâmico -->
+<% next_event = current_user.couple.events.order(date: :asc).where("date >= ?", Date.today).first %>
+<div class="mb-8 gap-6 flex justify-center flex-wrap">
+  <% if next_event %>
+    <div id="countdown" class="bg-loveRed text-white px-8 py-6 rounded-lg font-semibold shadow-xl flex items-center gap-4 transition-all transform hover:scale-105 space-x-4">
+      <div class="flex flex-col items-center justify-center">
+        <i class="fas fa-calendar-check text-4xl mb-4"></i> <!-- Ícone para próximo evento -->
+        <h2 class="text-2xl font-bold mb-2">Próximo Evento: <%= next_event.title %></h2>
+        <p class="text-lg mt-2 mb-4">Faltam:</p>
+      </div>
+      
+      <!-- Exibição do Contador -->
+      <div class="flex space-x-4">
+        <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg">
+          <span class="text-4xl font-bold text-loveRed" id="days">00</span>
+          <span class="text-sm text-gray-400">Dias</span>
+        </div>
+
+        <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg">
+          <span class="text-4xl font-bold text-loveRed" id="hours">00</span>
+          <span class="text-sm text-gray-400">Horas</span>
+        </div>
+
+        <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg">
+          <span class="text-4xl font-bold text-loveRed" id="minutes">00</span>
+          <span class="text-sm text-gray-400">Minutos</span>
+        </div>
+
+        <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg">
+          <span class="text-4xl font-bold text-loveRed" id="seconds">00</span>
+          <span class="text-sm text-gray-400">Segundos</span>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="bg-loveRed text-white px-6 py-3 rounded-md font-semibold shadow-md">
+      <p class="text-lg">Você não tem eventos futuros registrados.</p>
+    </div>
+  <% end %>
+</div>
 
   <!-- Botões para Eventos e Metas -->
   <div class="mb-8 gap-6 flex justify-center flex-wrap">
-    <!-- Adicionar Novo Evento -->
     <%= link_to new_couple_event_path(current_user.couple.slug), class: "bg-loveRed text-white px-6 py-3 rounded-md font-semibold hover:bg-red-600 shadow-md flex items-center gap-2 transition-all transform hover:scale-105" do %>
       <i class="fas fa-calendar-alt"></i> <!-- Ícone para evento -->
       Adicionar Novo Evento
     <% end %>
-
-    <!-- Ver Todos os Eventos -->
     <%= link_to couple_events_path(current_user.couple.slug), class: "bg-loveRed text-white px-6 py-3 rounded-md font-semibold hover:bg-red-600 shadow-md flex items-center gap-2 transition-all transform hover:scale-105" do %>
       <i class="fas fa-calendar-check"></i> <!-- Ícone para ver eventos -->
       Ver Todos os Eventos
     <% end %>
-
-    <!-- Adicionar Nova Meta -->
     <%= link_to new_couple_goal_path(current_user.couple.slug), class: "bg-green-500 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-600 shadow-md flex items-center gap-2 transition-all transform hover:scale-105" do %>
       <i class="fas fa-bullseye"></i> <!-- Ícone para metas -->
       Adicionar Nova Meta
     <% end %>
-
-    <!-- Ver Todas as Metas -->
     <%= link_to couple_goals_path(current_user.couple.slug), class: "bg-green-500 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-600 shadow-md flex items-center gap-2 transition-all transform hover:scale-105" do %>
       <i class="fas fa-trophy"></i> <!-- Ícone para ver metas -->
       Ver Todas as Metas
     <% end %>
   </div>
-
 
   <!-- Estatísticas do Casal -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl mb-12">
@@ -45,7 +79,6 @@
     </div>
 
     <!-- Próximo Evento -->
-    <% next_event = current_user.couple.events.order(date: :asc).where("date >= ?", Date.today).first %>
     <div class="p-6 bg-gray-800 rounded-lg shadow-md">
       <h3 class="text-xl font-bold text-loveRed mb-2 flex items-center gap-2">
         <i class="fas fa-calendar-check"></i> Próximo Evento
@@ -104,3 +137,31 @@
     <% end %>
   </div>
 </div>
+
+<script>
+  // Função para atualizar o contador de tempo
+  function updateCountdown() {
+    const targetDate = new Date("<%= next_event.date.to_json.delete_prefix('"').delete_suffix('"') %>").getTime();
+    const now = new Date().getTime();
+    const timeRemaining = targetDate - now;
+
+    if (timeRemaining <= 0) {
+      document.getElementById('timer').innerHTML = "O evento já chegou!";
+      return;
+    }
+
+    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+    // Atualiza os elementos no HTML
+    document.getElementById('days').innerHTML = days;
+    document.getElementById('hours').innerHTML = hours;
+    document.getElementById('minutes').innerHTML = minutes;
+    document.getElementById('seconds').innerHTML = seconds;
+  }
+
+  // Atualiza o contador a cada 1 segundo
+  setInterval(updateCountdown, 1000);
+</script>
