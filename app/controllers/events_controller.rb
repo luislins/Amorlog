@@ -13,7 +13,7 @@ class EventsController < ApplicationController
   def create
     @event = @couple.events.new(event_params)
     if @event.save
-      redirect_to couple_events_path, notice: "Evento criado com sucesso!"
+      redirect_to couple_events_path, notice: 'Evento criado com sucesso!'
     else
       render :new
     end
@@ -25,9 +25,9 @@ class EventsController < ApplicationController
     @couple = Couple.find_by(slug: params[:couple_slug])
 
     # Verifica se o casal pertence ao usuário autenticado
-    if @couple.nil? || @couple.user != current_user
-      redirect_to root_path, alert: "Acesso não autorizado."
-    end
+    return unless @couple.nil? || @couple.user != current_user
+
+      redirect_to root_path, alert: 'Acesso não autorizado.'
   end
 
   def event_params

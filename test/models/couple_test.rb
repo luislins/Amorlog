@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class CoupleTest < ActiveSupport::TestCase
   # test "the truth" do

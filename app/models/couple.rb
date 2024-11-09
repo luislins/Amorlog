@@ -15,6 +15,8 @@ class Couple < ApplicationRecord
 
   def generate_slug
     # Usa os primeiros nomes para o slug
-    self.slug = "#{partner_1.split.first}-e-#{partner_2.split.first}".parameterize if partner_1.present? && partner_2.present?
+    return unless partner_1.present? && partner_2.present?
+
+      self.slug = "#{partner_1.split.first}-e-#{partner_2.split.first}".parameterize
   end
 end
