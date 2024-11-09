@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* application.tailwind.css */
+input, textarea, select {
+  @apply bg-white text-black rounded-md border-gray-300 shadow-sm focus:ring-loveRed focus:border-loveRed;
+}
+
 /*
 
 @layer components {

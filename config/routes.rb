@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users
-  root "couples#new" # Define a página inicial como o formulário de criação de casal
+  get 'home/index'
+  root to: "home#index"
+
+  devise_for :users, controllers: { registrations: 'users/registrations' }
 
   resources :couples, param: :slug do
     resources :events

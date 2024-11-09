@@ -1,29 +1,38 @@
-<h2>Sign up</h2>
+<h2>Registrar</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+<%= form_with model: resource, as: resource_name, url: registration_path(resource_name), local: true do |f| %>
+  <%= devise_error_messages! %>
 
-  <div class="field">
+  <div>
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
 
-  <div class="field">
+  <div>
     <%= f.label :password %>
     <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <em>(mínimo de <%= @minimum_password_length %> caracteres)</em>
     <% end %><br />
     <%= f.password_field :password, autocomplete: "new-password" %>
   </div>
 
-  <div class="field">
+  <div>
     <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
+  <!-- Campos para os nomes do casal -->
+  <div>
+    <%= f.label :partner_1, "Nome do Parceiro 1" %><br />
+    <%= f.text_field :partner_1, required: true %>
+  </div>
+
+  <div>
+    <%= f.label :partner_2, "Nome do Parceiro 2" %><br />
+    <%= f.text_field :partner_2, required: true %>
+  </div>
+
+  <div>
+    <%= f.submit "Registrar" %>
   </div>
 <% end %>
-
-<%= render "devise/shared/links" %>
