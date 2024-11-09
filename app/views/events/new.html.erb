@@ -4,15 +4,18 @@
     <%= form_with model: [@couple, @event], local: true, class: "space-y-4" do |form| %>
       <div>
         <%= form.label :title, "Título do Evento", class: "block text-sm font-medium" %>
-        <%= form.text_field :title, class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveRed focus:border-loveRed" %>
+        <%= form.text_field :title, 
+              class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveRed focus:border-loveRed bg-white text-black" %>
       </div>
       <div>
         <%= form.label :description, "Descrição", class: "block text-sm font-medium" %>
-        <%= form.text_area :description, rows: 3, class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveRed focus:border-loveRed" %>
+        <%= form.text_area :description, rows: 3, 
+              class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveRed focus:border-loveRed bg-white text-black" %>
       </div>
       <div>
         <%= form.label :date, "Data", class: "block text-sm font-medium" %>
-        <%= form.date_field :date, class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveRed focus:border-loveRed" %>
+        <%= form.date_field :date, 
+              class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveRed focus:border-loveRed bg-white text-black" %>
       </div>
       <div class="text-center">
         <%= form.submit "Salvar", class: "bg-loveBlack text-loveRed px-6 py-2 rounded-md font-semibold hover:bg-gray-800" %>

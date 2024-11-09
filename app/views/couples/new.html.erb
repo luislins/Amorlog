@@ -4,7 +4,7 @@
     <%= form_with model: @couple, local: true, class: "space-y-4" do |form| %>
       <div>
         <%= form.label :name, "Nome do Casal", class: "block text-sm font-medium" %>
-        <%= form.text_field :name, class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveRed focus:border-loveRed" %>
+        <%= form.text_field :name, class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveRed focus:border-loveRed text-black" %>
       </div>
       <div class="text-center">
         <%= form.submit "Salvar", class: "bg-loveBlack text-loveRed px-6 py-2 rounded-md font-semibold hover:bg-gray-800" %>
