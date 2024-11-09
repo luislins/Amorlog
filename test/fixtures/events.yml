@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  couple: one
+  title: MyString
+  description: MyText
+  date: 2024-11-09
+  event_type: MyString
+
+two:
+  couple: two
+  title: MyString
+  description: MyText
+  date: 2024-11-09
+  event_type: MyString
