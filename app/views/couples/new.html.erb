@@ -1,0 +1,14 @@
+<div class="min-h-screen bg-loveBlack text-white flex items-center justify-center">
+  <div class="bg-loveRed p-8 rounded-lg shadow-lg w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-6 text-center">Criar Novo Casal</h1>
+    <%= form_with model: @couple, local: true, class: "space-y-4" do |form| %>
+      <div>
+        <%= form.label :name, "Nome do Casal", class: "block text-sm font-medium" %>
+        <%= form.text_field :name, class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveRed focus:border-loveRed" %>
+      </div>
+      <div class="text-center">
+        <%= form.submit "Salvar", class: "bg-loveBlack text-loveRed px-6 py-2 rounded-md font-semibold hover:bg-gray-800" %>
+      </div>
+    <% end %>
+  </div>
+</div>

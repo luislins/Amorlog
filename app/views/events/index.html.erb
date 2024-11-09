@@ -1,0 +1,17 @@
+<div class="min-h-screen bg-loveRed text-white py-10">
+  <div class="container mx-auto px-4">
+    <h1 class="text-3xl font-bold mb-6 text-center">Eventos de <%= @couple.name %></h1>
+    <ul class="space-y-4">
+      <% @events.each do |event| %>
+        <li class="bg-loveBlack p-4 rounded-lg shadow-md">
+          <h2 class="text-xl font-bold"><%= event.title %></h2>
+          <p class="text-sm text-gray-300"><%= event.description %></p>
+          <p class="text-sm mt-2 text-gray-400">Data: <%= event.date %></p>
+        </li>
+      <% end %>
+    </ul>
+    <div class="mt-6 text-center">
+      <%= link_to "Adicionar Evento", new_couple_event_path(@couple), class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
+    </div>
+  </div>
+</div>
