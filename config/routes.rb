@@ -6,5 +6,10 @@ Rails.application.routes.draw do
 
   resources :couples, param: :slug do
     resources :events
+    resources :goals do
+      member do
+        patch :mark_as_achieved
+      end
+    end
   end
 end

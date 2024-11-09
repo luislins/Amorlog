@@ -1,10 +1,11 @@
 class Couple < ApplicationRecord
   belongs_to :user
   has_many :events, dependent: :destroy
-
-  before_validation :generate_slug
+  has_many :goals, dependent: :destroy
 
   validates :partner_1, :partner_2, presence: true
+
+  before_validation :generate_slug
 
   def to_param
     slug

@@ -1,0 +1,73 @@
+<div class="min-h-screen bg-loveBlack text-white py-10">
+  <div class="container mx-auto px-4">
+    <!-- Título -->
+    <h1 class="text-4xl font-extrabold mb-12 text-center tracking-wider">
+      Metas de <%= @couple.partner_1 %> e <%= @couple.partner_2 %>
+    </h1>
+
+    <% if @goals.any? %>
+      <% pending_goals = @goals.where(achieved: false).order(due_date: :asc) %>
+      <% achieved_goals = @goals.where(achieved: true).order(due_date: :asc) %>
+
+      <!-- Metas Pendentes -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-green-400 mb-6 text-center">Metas Pendentes</h2>
+        <% if pending_goals.any? %>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <% pending_goals.each do |goal| %>
+              <div class="bg-green-600 p-6 rounded-lg shadow-lg hover:translate-y-1 transition-transform">
+                <h2 class="text-2xl font-bold text-white mb-2"><%= goal.title %></h2>
+                <p class="text-sm text-gray-200 mb-4"><%= goal.description %></p>
+                <p class="text-sm text-gray-300">Data Limite: <%= goal.due_date.strftime("%d/%m/%Y") %></p>
+                <div class="flex items-center justify-between mt-4">
+                  <%= link_to "Editar", edit_couple_goal_path(@couple.slug, goal), 
+                              class: "bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700" %>
+                  <%= link_to "Excluir", couple_goal_path(@couple.slug, goal), 
+                              method: :delete, data: { confirm: "Tem certeza?" },
+                              class: "bg-red-700 text-white px-4 py-2 rounded-md hover:bg-red-600" %>
+                  <%= link_to "Marcar como Atingida", mark_as_achieved_couple_goal_path(@couple.slug, goal), 
+                              method: :patch, class: "bg-green-800 text-white px-4 py-2 rounded-md hover:bg-green-700" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-gray-300 text-center">Nenhuma meta pendente registrada.</p>
+        <% end %>
+      </div>
+
+      <!-- Separador -->
+      <div class="border-t border-gray-700 mb-16"></div>
+
+      <!-- Metas Atingidas -->
+      <div>
+        <h2 class="text-3xl font-bold text-green-300 mb-6 text-center">Metas Atingidas</h2>
+        <% if achieved_goals.any? %>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <% achieved_goals.each do |goal| %>
+              <div class="bg-green-900 p-6 rounded-lg shadow-lg hover:translate-y-1 transition-transform">
+                <h2 class="text-2xl font-bold text-white mb-2"><%= goal.title %></h2>
+                <p class="text-sm text-gray-200 mb-4"><%= goal.description %></p>
+                <p class="text-sm text-gray-300">Atingida em: <%= goal.due_date.strftime("%d/%m/%Y") %></p>
+                <div class="flex items-center justify-end mt-4">
+                  <%= link_to "Excluir", couple_goal_path(@couple.slug, goal), 
+                              method: :delete, data: { confirm: "Tem certeza?" },
+                              class: "bg-red-700 text-white px-4 py-2 rounded-md hover:bg-red-600" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-gray-300 text-center">Nenhuma meta atingida registrada.</p>
+        <% end %>
+      </div>
+    <% else %>
+      <!-- Sem Metas -->
+      <p class="text-gray-300 text-center mt-12">
+        Nenhuma meta registrada. 
+        <%= link_to "Adicione sua primeira meta", new_couple_goal_path(@couple.slug), 
+                    class: "text-green-400 underline hover:text-green-300" %>
+      </p>
+    <% end %>
+  </div>
+</div>

@@ -3,12 +3,16 @@
   <h1 class="text-4xl font-bold mb-4">Bem-vindo de volta, <%= current_user.couple.partner_1 %> e <%= current_user.couple.partner_2 %>!</h1>
   <p class="text-lg mb-6 text-gray-300">Que tal organizar mais um momento especial hoje?</p>
 
-  <!-- Botões para Eventos -->
+  <!-- Botões para Eventos e Metas -->
   <div class="mb-8 gap-6 flex">
     <%= link_to "Adicionar Novo Evento", new_couple_event_path(current_user.couple.slug), 
                 class: "bg-loveRed text-white px-6 py-3 rounded-md font-semibold hover:bg-red-600 shadow" %>
     <%= link_to "Ver Todos os Eventos", couple_events_path(current_user.couple.slug), 
                 class: "bg-loveRed text-white px-6 py-3 rounded-md font-semibold hover:bg-red-600 shadow" %>
+    <%= link_to "Adicionar Nova Meta", new_couple_goal_path(current_user.couple.slug), 
+                class: "bg-green-500 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-600 shadow" %>
+    <%= link_to "Ver Todas as Metas", couple_goals_path(current_user.couple.slug), 
+                class: "bg-green-500 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-600 shadow" %>
   </div>
 
   <!-- Estatísticas do Casal -->
@@ -41,11 +45,17 @@
     </div>
 
     <!-- Metas do Casal -->
-    <% total_goals = current_user.couple.events.where(event_type: "goal").count %>
+    <% total_goals = current_user.couple.goals.count %>
+    <% achieved_goals = current_user.couple.goals.where(achieved: true).count %>
+    <% pending_goals = total_goals - achieved_goals %>
     <div class="p-6 bg-gray-800 rounded-lg shadow-md">
-      <h3 class="text-xl font-bold text-loveRed mb-2">Metas do Casal</h3>
+      <h3 class="text-xl font-bold text-green-400 mb-2">Metas do Casal</h3>
       <p class="text-4xl font-bold text-white"><%= total_goals %></p>
-      <p class="text-gray-400 mt-2">Metas registradas que vocês querem alcançar juntos.</p>
+      <p class="text-gray-400 mt-2">Vocês têm <%= total_goals %> metas registradas, sendo:</p>
+      <ul class="text-gray-300 mt-2 space-y-2">
+        <li>✅ <strong><%= achieved_goals %></strong> atingidas.</li>
+        <li>⏳ <strong><%= pending_goals %></strong> pendentes.</li>
+      </ul>
     </div>
   </div>
 

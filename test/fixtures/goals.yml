@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  due_date: 2024-11-09
+  couple: one
+  achieved: false
+
+two:
+  title: MyString
+  description: MyText
+  due_date: 2024-11-09
+  couple: two
+  achieved: false

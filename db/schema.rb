@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_09_183655) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_09_200931) do
   create_table "couples", force: :cascade do |t|
     t.string "name"
     t.string "slug"
@@ -33,6 +33,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_09_183655) do
     t.index ["couple_id"], name: "index_events_on_couple_id"
   end
 
+  create_table "goals", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.date "due_date"
+    t.integer "couple_id", null: false
+    t.boolean "achieved", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["couple_id"], name: "index_goals_on_couple_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -47,4 +58,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_09_183655) do
 
   add_foreign_key "couples", "users"
   add_foreign_key "events", "couples"
+  add_foreign_key "goals", "couples"
 end
