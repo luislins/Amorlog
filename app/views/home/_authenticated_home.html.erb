@@ -1,0 +1,70 @@
+<div class="flex flex-col items-center justify-center py-16">
+  <!-- Saudação -->
+  <h1 class="text-4xl font-bold mb-4">Bem-vindo de volta, <%= current_user.couple.partner_1 %> e <%= current_user.couple.partner_2 %>!</h1>
+  <p class="text-lg mb-6 text-gray-300">Que tal organizar mais um momento especial hoje?</p>
+
+  <!-- Botões para Eventos -->
+  <div class="mb-8 gap-6 flex">
+    <%= link_to "Adicionar Novo Evento", new_couple_event_path(current_user.couple.slug), 
+                class: "bg-loveRed text-white px-6 py-3 rounded-md font-semibold hover:bg-red-600 shadow" %>
+    <%= link_to "Ver Todos os Eventos", couple_events_path(current_user.couple.slug), 
+                class: "bg-loveRed text-white px-6 py-3 rounded-md font-semibold hover:bg-red-600 shadow" %>
+  </div>
+
+  <!-- Estatísticas do Casal -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl mb-12">
+    <!-- Número de Eventos -->
+    <div class="p-6 bg-gray-800 rounded-lg shadow-md">
+      <h3 class="text-xl font-bold text-loveRed mb-2">Eventos Registrados</h3>
+      <p class="text-4xl font-bold text-white"><%= current_user.couple.events.count %></p>
+      <p class="text-gray-400 mt-2">Você já registrou <%= current_user.couple.events.count %> momentos especiais.</p>
+    </div>
+
+    <!-- Próximo Evento -->
+    <% next_event = current_user.couple.events.order(date: :asc).where("date >= ?", Date.today).first %>
+    <div class="p-6 bg-gray-800 rounded-lg shadow-md">
+      <h3 class="text-xl font-bold text-loveRed mb-2">Próximo Evento</h3>
+      <% if next_event %>
+        <p class="text-2xl font-bold text-white"><%= next_event.title %></p>
+        <p class="text-gray-400 mt-2"><%= next_event.date.strftime("%d/%m/%Y") %></p>
+      <% else %>
+        <p class="text-gray-400">Você não tem eventos futuros cadastrados.</p>
+      <% end %>
+    </div>
+
+    <!-- Eventos Concluídos -->
+    <div class="p-6 bg-gray-800 rounded-lg shadow-md">
+      <h3 class="text-xl font-bold text-loveRed mb-2">Eventos Concluídos</h3>
+      <% past_events_count = current_user.couple.events.where("date < ?", Date.today).count %>
+      <p class="text-4xl font-bold text-white"><%= past_events_count %></p>
+      <p class="text-gray-400 mt-2">Momentos que já passaram, mas continuam em sua memória.</p>
+    </div>
+
+    <!-- Metas do Casal -->
+    <% total_goals = current_user.couple.events.where(event_type: "goal").count %>
+    <div class="p-6 bg-gray-800 rounded-lg shadow-md">
+      <h3 class="text-xl font-bold text-loveRed mb-2">Metas do Casal</h3>
+      <p class="text-4xl font-bold text-white"><%= total_goals %></p>
+      <p class="text-gray-400 mt-2">Metas registradas que vocês querem alcançar juntos.</p>
+    </div>
+  </div>
+
+  <!-- Últimos Eventos -->
+  <div class="w-full max-w-4xl">
+    <h2 class="text-2xl font-bold mb-4">Últimos Eventos</h2>
+    <% if current_user.couple.events.any? %>
+      <ul class="space-y-4">
+        <% current_user.couple.events.limit(3).order(created_at: :desc).each do |event| %>
+          <li class="bg-gray-800 p-4 rounded-lg">
+            <h3 class="text-lg font-bold"><%= event.title %></h3>
+            <p class="text-sm text-gray-400"><%= event.date.strftime("%d/%m/%Y") %></p>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-center text-gray-400 mt-4">Você ainda não tem eventos cadastrados. 
+        <%= link_to "Crie seu primeiro evento", new_couple_event_path(current_user.couple.slug), class: "text-loveRed underline" %>
+      </p>
+    <% end %>
+  </div>
+</div>

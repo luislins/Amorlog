@@ -1,43 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
   <head>
-    <title>CouplePlataform</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="CouplePlatform - Guarde e organize os momentos mais especiais do seu relacionamento.">
+    <meta name="keywords" content="relacionamento, casal, momentos, eventos, metas">
+    <meta name="author" content="CouplePlatform Team">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <title><%= content_for?(:title) ? yield(:title) : "CouplePlatform" %></title>
+    
+    <!-- Estilos -->
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-    <meta name="turbo-visit-control" content="reload">
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    
+    <!-- JavaScript -->
     <%= javascript_importmap_tags %>
+    
+    <!-- Favicon -->
+    <%= favicon_link_tag 'favicon.ico' %>
   </head>
 
   <body class="bg-loveBlack text-white min-h-screen">
-  <!-- Navbar -->
-  <nav class="bg-loveRed text-white p-4 shadow-md">
-    <div class="container mx-auto flex justify-between items-center">
-      <!-- Logo ou Nome da Plataforma -->
-      <div>
-        <a href="/" class="text-2xl font-bold">CouplePlataform</a>
-      </div>
+    <!-- Navbar -->
+    <nav class="bg-loveRed text-white p-4 shadow-md">
+      <div class="container mx-auto flex justify-between items-center">
+        <!-- Logo ou Nome da Plataforma -->
+        <div>
+          <%= link_to "CouplePlataform", root_path, class: "text-2xl font-bold" %>
+        </div>
 
-      <!-- Links de Navegação -->
-      <div class="space-x-4">
-        <%= link_to "Início", root_path, class: "hover:text-gray-300" %>
-        <% if user_signed_in? %>
-          <%= link_to "Meus Eventos", couple_events_path(current_user.couple.slug), class: "hover:text-gray-300" %>
-          <%= link_to "Sair", destroy_user_session_path, data: { "turbo-method": :delete }, class: "hover:text-gray-300" %>
-        <% else %>
-          <%= link_to "Entrar", new_user_session_path, class: "hover:text-gray-300" %>
-          <%= link_to "Registrar", new_user_registration_path, class: "hover:text-gray-300" %>
-        <% end %>
+        <!-- Links de Navegação -->
+        <div class="space-x-4">
+          <%= link_to "Início", root_path, class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
+          <% if user_signed_in? %>
+            <%= link_to "Meus Eventos", couple_events_path(current_user.couple.slug), class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
+            <%= link_to "Adicionar Evento", new_couple_event_path(current_user.couple.slug), class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
+            <%= link_to "Sair", destroy_user_session_path, data: { "turbo-method": :delete }, class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
+          <% else %>
+            <%= link_to "Entrar", new_user_session_path, class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
+            <%= link_to "Registrar", new_user_registration_path, class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
+          <% end %>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <!-- Main Content -->
-  <main class="container mx-auto mt-8 px-4">
-    <%= yield %>
-  </main>
-</body>
+    <!-- Main Content -->
+    <main class="container mx-auto mt-8 px-4">
+      <%= yield %>
+    </main>
+  </body>
 </html>
