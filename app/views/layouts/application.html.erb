@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="description" content="CouplePlatform - Guarde e organize os momentos mais especiais do seu relacionamento.">
+    <meta name="description" content="Amorlog - Guarde e organize os momentos mais especiais do seu relacionamento.">
     <meta name="keywords" content="relacionamento, casal, momentos, eventos, metas">
-    <meta name="author" content="CouplePlatform Team">
+    <meta name="author" content="Amorlog Team">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <title><%= content_for?(:title) ? yield(:title) : "CouplePlatform" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : "Amorlog" %></title>
     
     <!-- Estilos -->
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
@@ -28,8 +28,12 @@
       <div class="container mx-auto flex justify-between items-center">
         <!-- Logo ou Nome da Plataforma -->
         <div>
-          <%= link_to "CouplePlataform", root_path, class: "text-2xl font-bold" %>
+          <%= link_to root_path, class: "text-4xl font-extrabold text-black hover:text-white transition-colors duration-300 flex items-center gap-2" do %>
+            <i class="fas fa-heartbeat"></i> <!-- Ícone do coração para reforçar o tema de amor -->
+            AmorLog
+          <% end %>
         </div>
+
 
         <!-- Links de Navegação -->
         <div class="space-x-4">
