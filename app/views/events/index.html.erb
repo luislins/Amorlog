@@ -1,20 +1,112 @@
 <div class="min-h-screen bg-loveBlack text-white py-10">
   <div class="container mx-auto px-4">
-    <h1 class="text-3xl font-bold mb-6 text-center">Eventos de <%= @couple.partner_1 %> e <%= @couple.partner_2 %></h1>
-    <% if @events.any? %>
-      <ul class="space-y-4">
-        <% @events.each do |event| %>
-          <li class="bg-loveRed p-4 rounded-lg shadow-md">
-            <h2 class="text-xl font-bold"><%= event.title %></h2>
-            <p class="text-sm text-gray-200"><%= event.description %></p>
-            <p class="text-sm mt-2 text-gray-400">Data: <%= event.date %></p>
-          </li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p class="text-center text-gray-300">Nenhum evento cadastrado ainda. 
-        <%= link_to "Adicione um novo evento", new_couple_event_path(@couple.slug), class: "text-loveRed underline" %>
-      </p>
-    <% end %>
+    <!-- Título -->
+    <h1 class="text-4xl font-extrabold mb-12 text-center tracking-wider">
+      Momentos e Metas de <%= @couple.partner_1 %> e <%= @couple.partner_2 %>
+    </h1>
+
+    <% upcoming_events = @events.select { |event| event.date >= Date.today }.sort_by(&:date) %>
+    <% past_events = @events.select { |event| event.date < Date.today }.sort_by(&:date).reverse %>
+    <% goals = @events.select { |event| event.event_type == "goal" } %>
+    <% completed_goals = goals.select { |goal| goal.date < Date.today } %>
+    <% pending_goals = goals.select { |goal| goal.date >= Date.today } %>
+
+    <!-- Eventos Futuros -->
+    <div class="mb-16">
+      <h2 class="text-3xl font-bold text-loveRed mb-6 text-center">Próximos Momentos</h2>
+      <% if upcoming_events.any? %>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% upcoming_events.each do |event| %>
+            <div class="<%= event_type_card_class(event.event_type) %> p-6 rounded-lg shadow-lg hover:translate-y-1 transition-transform">
+              <h2 class="text-2xl font-bold mb-2"><%= event.title %></h2>
+              <p class="text-sm text-gray-200 mb-4"><%= event.description %></p>
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-semibold text-gray-300">
+                  Data: <%= event.date.strftime("%d/%m/%Y") %>
+                </span>
+                <span class="px-3 py-1 text-sm font-bold rounded-full <%= badge_class(event.event_type) %>">
+                  <%= format_event_type(event.event_type) %>
+                </span>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-gray-300 text-center">Nenhum evento futuro registrado.</p>
+      <% end %>
+    </div>
+
+    <!-- Separador -->
+    <div class="border-t border-gray-700 mb-16"></div>
+
+    <!-- Eventos Passados -->
+    <div class="mb-16">
+      <h2 class="text-3xl font-bold text-gray-400 mb-6 text-center">Momentos Passados</h2>
+      <% if past_events.any? %>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% past_events.each do |event| %>
+            <div class="<%= event_type_card_class(event.event_type) %> p-6 rounded-lg shadow-md hover:translate-y-1 transition-transform">
+              <h2 class="text-2xl font-bold mb-2"><%= event.title %></h2>
+              <p class="text-sm text-gray-200 mb-4"><%= event.description %></p>
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-semibold text-gray-300">
+                  Data: <%= event.date.strftime("%d/%m/%Y") %>
+                </span>
+                <span class="px-3 py-1 text-sm font-bold rounded-full <%= badge_class(event.event_type) %>">
+                  <%= format_event_type(event.event_type) %>
+                </span>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-gray-300 text-center">Nenhum evento passado registrado.</p>
+      <% end %>
+    </div>
+
+    <!-- Separador -->
+    <div class="border-t border-gray-700 mb-16"></div>
+
+    <!-- Metas -->
+    <div class="bg-gradient-to-r from-green-600 via-green-500 to-green-400 py-12 px-6 rounded-lg shadow-lg">
+      <h2 class="text-4xl font-bold text-white mb-8 text-center tracking-wide">Metas</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Metas Pendentes -->
+        <div>
+          <h3 class="text-2xl font-bold text-white mb-4">Metas Pendentes</h3>
+          <% if pending_goals.any? %>
+            <ul class="space-y-4">
+              <% pending_goals.each do |goal| %>
+                <li class="bg-green-700 text-white p-4 rounded-lg shadow-md">
+                  <h4 class="text-lg font-bold"><%= goal.title %></h4>
+                  <p class="text-sm text-gray-300"><%= goal.description %></p>
+                  <p class="text-sm text-gray-200 mt-2">Data Limite: <%= goal.date.strftime("%d/%m/%Y") %></p>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="text-gray-200">Nenhuma meta pendente.</p>
+          <% end %>
+        </div>
+
+        <!-- Metas Atingidas -->
+        <div>
+          <h3 class="text-2xl font-bold text-white mb-4">Metas Atingidas</h3>
+          <% if completed_goals.any? %>
+            <ul class="space-y-4">
+              <% completed_goals.each do |goal| %>
+                <li class="bg-green-900 text-white p-4 rounded-lg shadow-md">
+                  <h4 class="text-lg font-bold"><%= goal.title %></h4>
+                  <p class="text-sm text-gray-300"><%= goal.description %></p>
+                  <p class="text-sm text-gray-200 mt-2">Atingida em: <%= goal.date.strftime("%d/%m/%Y") %></p>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="text-gray-200">Nenhuma meta atingida ainda.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

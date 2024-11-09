@@ -1,24 +1,43 @@
-<div class="min-h-screen bg-loveBlack text-white flex items-center justify-center">
-  <div class="bg-loveRed p-8 rounded-lg shadow-lg w-full max-w-md">
-    <h1 class="text-2xl font-bold mb-6 text-center">Adicionar Novo Evento</h1>
-    <%= form_with model: [@couple, @event], local: true, class: "space-y-4" do |form| %>
+<div class="min-h-screen bg-loveBlack text-white flex items-center justify-center px-4">
+  <div class="bg-loveRed p-8 rounded-lg shadow-xl w-full max-w-lg">
+    <!-- Título -->
+    <h1 class="text-3xl font-bold mb-6 text-center">Adicionar Novo Evento</h1>
+    
+    <!-- Formulário -->
+    <%= form_with model: [@couple, @event], local: true, class: "space-y-6" do |form| %>
+      <!-- Título do Evento -->
       <div>
-        <%= form.label :title, "Título do Evento", class: "block text-sm font-medium" %>
+        <%= form.label :title, "Título do Evento", class: "block text-sm font-medium text-white mb-2" %>
         <%= form.text_field :title, 
-              class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveRed focus:border-loveRed bg-white text-black" %>
+              class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveBlack focus:border-loveBlack bg-white text-black px-3 py-2" %>
       </div>
+
+      <!-- Descrição -->
       <div>
-        <%= form.label :description, "Descrição", class: "block text-sm font-medium" %>
+        <%= form.label :description, "Descrição", class: "block text-sm font-medium text-white mb-2" %>
         <%= form.text_area :description, rows: 3, 
-              class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveRed focus:border-loveRed bg-white text-black" %>
+              class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveBlack focus:border-loveBlack bg-white text-black px-3 py-2" %>
       </div>
+
+      <!-- Data -->
       <div>
-        <%= form.label :date, "Data", class: "block text-sm font-medium" %>
+        <%= form.label :date, "Data do Evento", class: "block text-sm font-medium text-white mb-2" %>
         <%= form.date_field :date, 
-              class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveRed focus:border-loveRed bg-white text-black" %>
+              class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveBlack focus:border-loveBlack bg-white text-black px-3 py-2" %>
       </div>
+
+      <!-- Tipo de Evento -->
+      <div>
+        <%= form.label :event_type, "Tipo de Evento", class: "block text-sm font-medium text-white mb-2" %>
+        <%= form.select :event_type, 
+              [["Selecione", nil], ["Meta", "goal"], ["Memória", "memory"], ["Outro", "other"]], 
+              {}, 
+              class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveBlack focus:border-loveBlack bg-white text-black px-3 py-2" %>
+      </div>
+
+      <!-- Botão de Salvar -->
       <div class="text-center">
-        <%= form.submit "Salvar", class: "bg-loveBlack text-loveRed px-6 py-2 rounded-md font-semibold hover:bg-gray-800" %>
+        <%= form.submit "Salvar", class: "bg-loveBlack text-loveRed px-6 py-2 rounded-lg font-bold hover:bg-gray-800 transition-colors" %>
       </div>
     <% end %>
   </div>

@@ -13,7 +13,7 @@ class EventsController < ApplicationController
   def create
     @event = @couple.events.new(event_params)
     if @event.save
-      redirect_to events_path, notice: "Evento criado com sucesso!"
+      redirect_to couple_events_path, notice: "Evento criado com sucesso!"
     else
       render :new
     end
