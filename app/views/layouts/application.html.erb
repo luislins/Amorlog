@@ -6,14 +6,38 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <meta name="turbo-visit-control" content="reload">
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-loveBlack text-white min-h-screen flex items-center justify-center">
-    <main class="w-full max-w-3xl px-5">
-      <%= yield %>
-    </main>
-  </body>
+  <body class="bg-loveBlack text-white min-h-screen">
+  <!-- Navbar -->
+  <nav class="bg-loveRed text-white p-4 shadow-md">
+    <div class="container mx-auto flex justify-between items-center">
+      <!-- Logo ou Nome da Plataforma -->
+      <div>
+        <a href="/" class="text-2xl font-bold">CouplePlataform</a>
+      </div>
+
+      <!-- Links de Navegação -->
+      <div class="space-x-4">
+        <%= link_to "Início", root_path, class: "hover:text-gray-300" %>
+        <% if user_signed_in? %>
+          <%= link_to "Meus Eventos", couple_events_path(current_user.couple.slug), class: "hover:text-gray-300" %>
+          <%= link_to "Sair", destroy_user_session_path, data: { "turbo-method": :delete }, class: "hover:text-gray-300" %>
+        <% else %>
+          <%= link_to "Entrar", new_user_session_path, class: "hover:text-gray-300" %>
+          <%= link_to "Registrar", new_user_registration_path, class: "hover:text-gray-300" %>
+        <% end %>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container mx-auto mt-8 px-4">
+    <%= yield %>
+  </main>
+</body>
 </html>
