@@ -2,20 +2,20 @@
   <div class="container mx-auto px-4">
     <!-- Título e Botão de Adicionar -->
     <div class="bg-gray-800 py-6 px-8 rounded-lg shadow-lg mb-12">
-  <div class="flex justify-between items-center">
-    <!-- Título -->
-    <div>
-      <h1 class="text-4xl font-extrabold text-white tracking-wide">
-        Metas de <span class="text-loveRed"><%= @couple.partner_1 %></span> e <span class="text-loveRed"><%= @couple.partner_2 %></span>
-      </h1>
-      <p class="text-gray-300 mt-2">Estabeleça e acompanhe suas metas para um futuro incrível juntos.</p>
+      <div class="flex justify-between items-center">
+        <!-- Título -->
+        <div>
+          <h1 class="text-4xl font-extrabold text-white tracking-wide">
+            Metas de <span class="text-loveRed"><%= @couple.partner_1 %></span> e <span class="text-loveRed"><%= @couple.partner_2 %></span>
+          </h1>
+          <p class="text-gray-300 mt-2">Estabeleça e acompanhe suas metas para um futuro incrível juntos.</p>
+        </div>
+        
+        <!-- Botão de Adicionar -->
+        <%= link_to "Adicionar Meta", new_couple_goal_path(@couple.slug),
+                    class: "bg-green-500 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-600 shadow transition-transform transform hover:scale-105" %>
+      </div>
     </div>
-    
-    <!-- Botão de Adicionar -->
-    <%= link_to "Adicionar Meta", new_couple_goal_path(@couple.slug),
-                class: "bg-green-500 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-600 shadow transition-transform transform hover:scale-105" %>
-  </div>
-</div>
 
     <% pending_goals = @goals.where(achieved: false).order(due_date: :asc) %>
     <% achieved_goals = @goals.where(achieved: true).order(due_date: :asc) %>
@@ -26,10 +26,14 @@
       <% if pending_goals.any? %>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <% pending_goals.each do |goal| %>
-            <div class="bg-green-700 p-6 rounded-lg shadow-lg hover:translate-y-1 transition-transform">
+            <div class="relative bg-green-700 p-6 rounded-lg shadow-lg hover:translate-y-1 transition-transform">
               <h2 class="text-2xl font-bold text-white mb-2"><%= goal.title %></h2>
               <p class="text-sm text-gray-200 mb-4"><%= goal.description %></p>
-              <p class="text-sm text-gray-300">Data Limite: <%= goal.due_date.strftime("%d/%m/%Y") %></p>
+              <p class="text-sm text-gray-300 mb-4">Data Limite: <%= goal.due_date.strftime("%d/%m/%Y") %></p>
+              <!-- Indicador de Pendente -->
+              <span class="absolute top-4 right-4 px-3 py-1 text-xs font-bold bg-yellow-500 text-black rounded-full">
+                Pendente
+              </span>
             </div>
           <% end %>
         </div>
@@ -38,16 +42,23 @@
       <% end %>
     </div>
 
+    <!-- Separador -->
+    <div class="border-t border-gray-700 mb-16"></div>
+
     <!-- Metas Atingidas -->
     <div>
       <h2 class="text-3xl font-bold text-green-300 mb-6 text-center">Metas Atingidas</h2>
       <% if achieved_goals.any? %>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <% achieved_goals.each do |goal| %>
-            <div class="bg-green-900 p-6 rounded-lg shadow-lg hover:translate-y-1 transition-transform">
+            <div class="relative bg-green-900 p-6 rounded-lg shadow-lg hover:translate-y-1 transition-transform">
               <h2 class="text-2xl font-bold text-white mb-2"><%= goal.title %></h2>
               <p class="text-sm text-gray-200 mb-4"><%= goal.description %></p>
-              <p class="text-sm text-gray-300">Atingida em: <%= goal.due_date.strftime("%d/%m/%Y") %></p>
+              <p class="text-sm text-gray-300 mb-4">Atingida em: <%= goal.due_date.strftime("%d/%m/%Y") %></p>
+              <!-- Indicador de Atingida -->
+              <span class="absolute top-4 right-4 px-3 py-1 text-xs font-bold bg-green-500 text-white rounded-full">
+                Atingida
+              </span>
             </div>
           <% end %>
         </div>
