@@ -141,9 +141,11 @@
 <script>
   // Função para atualizar o contador de tempo
   function updateCountdown() {
+    console.log(new Date("<%= next_event.date.to_json.delete_prefix('"').delete_suffix('"') %>").getTime())
     const targetDate = new Date("<%= next_event.date.to_json.delete_prefix('"').delete_suffix('"') %>").getTime();
     const now = new Date().getTime();
     const timeRemaining = targetDate - now;
+    console.log(now)
 
     if (timeRemaining <= 0) {
       document.getElementById('timer').innerHTML = "O evento já chegou!";
@@ -161,7 +163,5 @@
     document.getElementById('minutes').innerHTML = minutes;
     document.getElementById('seconds').innerHTML = seconds;
   }
-
-  // Atualiza o contador a cada 1 segundo
   setInterval(updateCountdown, 1000);
 </script>

@@ -27,12 +27,14 @@
     <nav class="bg-loveRed text-white p-4 shadow-md">
       <div class="container mx-auto flex justify-between items-center">
         <!-- Logo ou Nome da Plataforma -->
-        <div>
-          <%= link_to root_path, class: "text-4xl font-extrabold text-black hover:text-white transition-colors duration-300 flex items-center gap-2" do %>
-            <i class="fas fa-heartbeat"></i> <!-- Ícone do coração para reforçar o tema de amor -->
-            AmorLog
-          <% end %>
-        </div>
+       <div>
+        <%= link_to root_path, class: "text-4xl font-extrabold text-white transition-colors duration-300 flex items-center gap-2" do %>
+          <i class="fas fa-heartbeat text-white animate-pulse hover:text-loveBlack"></i> <!-- Ícone do coração com cor branca -->
+          <span class="text-white hover:text-loveBlack">AmorLog</span> <!-- Nome "AmorLog" em branco com hover vermelho -->
+        <% end %>
+      </div>
+
+
 
 
         <!-- Links de Navegação -->
