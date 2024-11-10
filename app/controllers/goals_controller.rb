@@ -37,8 +37,11 @@ class GoalsController < ApplicationController
     end
 
     def mark_as_achieved
-      @goal.update(achieved: true)
-      redirect_to couple_goals_path(@couple.slug), notice: 'Meta marcada como atingida!'
+      if @goal.update(achieved: true)
+        redirect_to couple_goals_path(@couple.slug), notice: 'Meta concluída com sucesso!'
+      else
+        redirect_to couple_goals_path(@couple.slug), alert: 'Não foi possível concluir a meta.'
+      end
     end
 
     private

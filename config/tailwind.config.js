@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Montserrat', 'sans-serif'],
+        sans: ['InterVariable','Montserrat', 'sans-serif'],
         serif: ['Playfair Display', 'serif'],
       },
       colors: {
