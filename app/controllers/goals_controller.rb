@@ -48,6 +48,11 @@ class GoalsController < ApplicationController
 
     def set_couple
       @couple = Couple.find_by(slug: params[:couple_slug])
+  
+      # Verifica se o casal pertence ao usuário autenticado
+      return unless @couple.nil? || @couple.user != current_user
+  
+        redirect_to root_path, alert: 'Acesso não autorizado.'
     end
 
     def set_goal

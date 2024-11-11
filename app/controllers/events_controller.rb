@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_couple
+  before_action :set_event, only: [:edit, :update, :destroy]
 
   def index
     @events = @couple.events
@@ -19,6 +20,9 @@ class EventsController < ApplicationController
     end
   end
 
+  def edit
+  end
+
   private
 
   def set_couple
@@ -28,6 +32,10 @@ class EventsController < ApplicationController
     return unless @couple.nil? || @couple.user != current_user
 
       redirect_to root_path, alert: 'Acesso não autorizado.'
+  end
+
+  def set_event
+    @event = @couple.events.find(params[:id])
   end
 
   def event_params
