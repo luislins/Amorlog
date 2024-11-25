@@ -7,7 +7,7 @@
   <p class="text-lg mb-8 text-gray-300 text-center">Que tal organizar mais um momento especial juntos?</p>
 
   <!-- Contador de Tempo Dinâmico -->
-<% next_event = current_user.couple.events.order(date: :asc).where("date >= ?", Date.today).first %>
+<% next_event = current_user.couple.events.order(date: :asc).where("date > ?", Date.today).first %>
 <div class="mb-8 gap-6 flex justify-center flex-wrap">
   <% if next_event %>
     <div id="countdown" class="bg-loveRed text-white px-8 py-6 rounded-lg font-semibold shadow-xl flex items-center gap-4 transition-all transform hover:scale-105 space-x-4">
@@ -141,21 +141,21 @@
 <script>
   // Função para atualizar o contador de tempo
   function updateCountdown() {
-    console.log(new Date("<%= next_event.date.to_json.delete_prefix('"').delete_suffix('"') %>").getTime())
     const targetDate = new Date("<%= next_event.date.to_json.delete_prefix('"').delete_suffix('"') %>").getTime();
     const now = new Date().getTime();
-    const timeRemaining = targetDate - now;
-    console.log(now)
+    const timeRemaining = Math.abs(targetDate - now);
 
-    if (timeRemaining <= 0) {
-      document.getElementById('timer').innerHTML = "O evento já chegou!";
-      return;
-    }
+    // if (timeRemaining <= 0) {
+    //   console.log(timeRemaining)
+    //   document.getElementById('timer').innerHTML = "O evento já chegou!";
+    //   return;
+    // }
 
-    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+    const totalSeconds = Math.floor(timeRemaining / 1000);
+    const days = Math.floor(totalSeconds / (60 * 60 * 24));
+    const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+    const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+    const seconds = Math.floor(totalSeconds % 60);
 
     // Atualiza os elementos no HTML
     document.getElementById('days').innerHTML = days;
@@ -163,5 +163,6 @@
     document.getElementById('minutes').innerHTML = minutes;
     document.getElementById('seconds').innerHTML = seconds;
   }
+
   setInterval(updateCountdown, 1000);
 </script>
