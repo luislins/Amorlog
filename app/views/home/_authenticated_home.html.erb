@@ -141,7 +141,7 @@
 <script>
   // Função para atualizar o contador de tempo
   function updateCountdown() {
-    const targetDate = new Date("<%= next_event.date.to_json.delete_prefix('"').delete_suffix('"') %>").getTime();
+    const targetDate = new Date("<%= next_event&.date.to_json.delete_prefix('"').delete_suffix('"') %>").getTime();
     const now = new Date().getTime();
     const timeRemaining = Math.abs(targetDate - now);
 
