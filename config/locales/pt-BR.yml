@@ -1,0 +1,7 @@
+pt-BR:
+  goal:
+    kinds:
+      numeric: "Numérico"
+      percentage: "Porcentagem"
+      boolean: "Booleano"
+      custom: "Personalizado"
