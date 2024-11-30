@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_couple
-  before_action :set_event, only: [:edit, :update, :destroy]
+  before_action :set_event, only: %i[edit update destroy]
 
   def index
     @events = @couple.events
@@ -20,8 +20,7 @@ class EventsController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   private
 

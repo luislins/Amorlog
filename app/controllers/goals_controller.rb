@@ -47,14 +47,14 @@ class GoalsController < ApplicationController
     def update_current_value
       @goal = Goal.find(params[:id])
       value_to_add = params[:value_to_add].to_f
-  
+
       if @goal.current_value + value_to_add > @goal.numeric_value
-        flash[:alert] = "O valor adicionado excede o valor total da meta."
+        flash[:alert] = 'O valor adicionado excede o valor total da meta.'
       else
         @goal.increment!(:current_value, value_to_add)
-        flash[:notice] = "Valor adicionado com sucesso!"
+        flash[:notice] = 'Valor adicionado com sucesso!'
       end
-  
+
       redirect_to couple_goals_path(@goal.couple)
     end
 
@@ -62,10 +62,10 @@ class GoalsController < ApplicationController
 
     def set_couple
       @couple = Couple.find_by(slug: params[:couple_slug])
-  
+
       # Verifica se o casal pertence ao usuário autenticado
       return unless @couple.nil? || @couple.user != current_user
-  
+
         redirect_to root_path, alert: 'Acesso não autorizado.'
     end
 

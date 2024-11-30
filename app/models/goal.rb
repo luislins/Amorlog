@@ -12,7 +12,7 @@ class Goal < ApplicationRecord
   }
 
   def numeric?
-    kind == "numeric" && numeric_value.present? && current_value.present?
+    kind == 'numeric' && numeric_value.present? && current_value.present?
   end
 
   def mark_as_achieved
