@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_29_203021) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_30_031749) do
   create_table "challenges", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -53,6 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_29_203021) do
     t.datetime "updated_at", null: false
     t.integer "kind", default: 0, null: false
     t.decimal "numeric_value", precision: 15, scale: 2
+    t.decimal "current_value", precision: 15, scale: 2, default: "0.0", null: false
     t.index ["couple_id"], name: "index_goals_on_couple_id"
   end
 

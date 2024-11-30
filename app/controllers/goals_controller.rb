@@ -44,6 +44,20 @@ class GoalsController < ApplicationController
       end
     end
 
+    def update_current_value
+      @goal = Goal.find(params[:id])
+      value_to_add = params[:value_to_add].to_f
+  
+      if @goal.current_value + value_to_add > @goal.numeric_value
+        flash[:alert] = "O valor adicionado excede o valor total da meta."
+      else
+        @goal.increment!(:current_value, value_to_add)
+        flash[:notice] = "Valor adicionado com sucesso!"
+      end
+  
+      redirect_to couple_goals_path(@goal.couple)
+    end
+
     private
 
     def set_couple
