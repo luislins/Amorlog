@@ -1,10 +1,24 @@
-<header class="bg-loveRed py-8">
-  <div class="container mx-auto px-4 text-center">
-    <h1 class="text-5xl font-bold">Bem-vindo ao Amorlog</h1>
-    <p class="text-lg mt-4 text-gray-200">Guarde e celebre os momentos mais especiais do seu relacionamento.</p>
-    <div class="mt-6">
-      <%= link_to "Registrar-se", new_user_registration_path, class: "bg-white text-loveRed px-6 py-3 rounded-md font-semibold hover:bg-gray-200 mr-4" %>
-      <%= link_to "Entrar", new_user_session_path, class: "bg-loveBlack border border-white text-white px-6 py-3 rounded-md font-semibold hover:bg-gray-800" %>
+<header class="relative bg-gradient-to-r from-loveRed via-loveBlack to-loveRed py-20 text-center text-white overflow-hidden">
+  <!-- Corações animados aleatórios no fundo -->
+  <div class="absolute inset-0">
+    <% 20.times do %> <!-- Gere 20 corações -->
+      <div class="absolute animate-float" style="top: <%= rand(2..98) %>%; left: <%= rand(2..98) %>%; transform: scale(<%= rand(0.5..1.5).round(2) %>);">
+        <i class="fas fa-heart text-loveRed opacity-30" style="font-size: <%= rand(1.5..4) %>rem;"></i>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Conteúdo principal -->
+  <div class="relative z-10">
+    <h1 class="text-6xl font-extrabold text-white drop-shadow-lg">
+      Amorlog
+    </h1>
+    <p class="text-xl text-gray-300 mt-4">
+      Onde seus momentos mais preciosos ganham vida.
+    </p>
+    <div class="mt-8 flex justify-center space-x-4">
+      <%= link_to "Registrar-se", new_user_registration_path, class: "bg-loveRed text-white px-6 py-3 rounded-md font-semibold hover:bg-white hover:text-loveRed transition shadow-lg" %>
+      <%= link_to "Entrar", new_user_session_path, class: "bg-transparent border border-loveRed text-loveRed px-6 py-3 rounded-md font-semibold hover:bg-loveRed hover:text-white transition shadow-lg" %>
     </div>
   </div>
 </header>
@@ -13,36 +27,71 @@
   <div class="container mx-auto px-4">
     <!-- Como Funciona -->
     <section class="text-center mb-12">
-      <h2 class="text-3xl font-bold mb-6">Como Funciona?</h2>
-      <p class="text-gray-300 mb-4">Com o Amorlog, você pode registrar e acompanhar os marcos mais importantes do seu relacionamento. Organize tudo em um só lugar!</p>
+      <h2 class="text-3xl font-bold mb-6 text-white">Como o Amorlog Funciona?</h2>
+      <p class="text-gray-300 mb-4">No Amorlog, você pode registrar momentos, metas e eventos importantes do seu relacionamento. Aqui estão as etapas:</p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="p-6 bg-gray-800 rounded-lg shadow-md">
-          <h3 class="text-xl font-bold mb-2">Crie sua conta</h3>
-          <p class="text-gray-400">Registre-se em minutos e comece a guardar seus momentos especiais.</p>
+          <h3 class="text-xl font-bold mb-2 text-white">1. Crie sua conta</h3>
+          <p class="text-gray-400">Registre-se em minutos e comece a usar o Amorlog gratuitamente.</p>
         </div>
         <div class="p-6 bg-gray-800 rounded-lg shadow-md">
-          <h3 class="text-xl font-bold mb-2">Adicione eventos</h3>
-          <p class="text-gray-400">Registre datas marcantes, metas e memórias do casal de forma organizada.</p>
+          <h3 class="text-xl font-bold mb-2 text-white">2. Adicione eventos</h3>
+          <p class="text-gray-400">Adicione datas importantes, como aniversários, viagens ou outros marcos.</p>
         </div>
         <div class="p-6 bg-gray-800 rounded-lg shadow-md">
-          <h3 class="text-xl font-bold mb-2">Reviva as memórias</h3>
-          <p class="text-gray-400">Acesse sua timeline de eventos sempre que quiser relembrar.</p>
+          <h3 class="text-xl font-bold mb-2 text-white">3. Configure metas</h3>
+          <p class="text-gray-400">Defina objetivos juntos, como uma viagem ou conquistas pessoais, e acompanhe o progresso.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefícios -->
+    <section class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-white">Por que usar o Amorlog?</h2>
+      <p class="text-gray-300 mb-4">Aqui estão alguns benefícios que você e seu parceiro(a) vão adorar:</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="p-6 bg-gray-800 rounded-lg shadow-md">
+          <i class="fas fa-heart text-loveRed text-4xl mb-4"></i>
+          <h3 class="text-xl font-bold mb-2 text-white">Memórias Eternas</h3>
+          <p class="text-gray-400">Nunca mais perca um momento especial. Tenha tudo guardado em um só lugar.</p>
+        </div>
+        <div class="p-6 bg-gray-800 rounded-lg shadow-md">
+          <i class="fas fa-calendar-alt text-loveRed text-4xl mb-4"></i>
+          <h3 class="text-xl font-bold mb-2 text-white">Organização Fácil</h3>
+          <p class="text-gray-400">Planeje seus eventos e metas com praticidade e rapidez.</p>
+        </div>
+        <div class="p-6 bg-gray-800 rounded-lg shadow-md">
+          <i class="fas fa-chart-line text-loveRed text-4xl mb-4"></i>
+          <h3 class="text-xl font-bold mb-2 text-white">Progresso Visível</h3>
+          <p class="text-gray-400">Acompanhe o progresso das metas que você e seu parceiro estabeleceram.</p>
         </div>
       </div>
     </section>
 
     <!-- Depoimentos -->
     <section class="text-center mb-12">
-      <h2 class="text-3xl font-bold mb-6">O que os casais dizem?</h2>
+      <h2 class="text-3xl font-bold mb-6 text-white">O que os casais dizem?</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div class="p-6 bg-gray-800 rounded-lg shadow-md">
           <p class="text-gray-300 italic">"Finalmente podemos organizar nossos momentos juntos. É perfeito!"</p>
-          <h4 class="mt-4 text-lg font-bold">- Ana e João</h4>
+          <h4 class="mt-4 text-lg font-bold text-loveRed">- Ana e João</h4>
         </div>
         <div class="p-6 bg-gray-800 rounded-lg shadow-md">
           <p class="text-gray-300 italic">"A plataforma salvou nossas memórias. Adoramos reviver as datas!"</p>
-          <h4 class="mt-4 text-lg font-bold">- Beatriz e Guilherme</h4>
+          <h4 class="mt-4 text-lg font-bold text-loveRed">- Beatriz e Guilherme</h4>
         </div>
         <div class="p-6 bg-gray-800 rounded-lg shadow-md">
           <p class="text-gray-300 italic">"Simples de usar e muito bonita. Recomendo a todos!"</p>
-          <h4 class="mt-4 text-lg font-bold">- 
+          <h4 class="mt-4 text-lg font-bold text-loveRed">- Carlos e Fernanda</h4>
+        </div>
+      </div>
+    </section>
+
+    <!-- Incentivo -->
+    <section class="text-center">
+      <h2 class="text-3xl font-bold mb-6 text-white">Pronto para começar?</h2>
+      <p class="text-gray-300 mb-6">Crie sua conta agora e dê o primeiro passo para organizar suas memórias e metas juntos.</p>
+      <%= link_to "Registrar-se Agora", new_user_registration_path, class: "bg-loveRed text-white px-6 py-3 rounded-md font-semibold hover:bg-loveBlack" %>
+    </section>
+  </div>
+</main>

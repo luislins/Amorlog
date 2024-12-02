@@ -1,0 +1,14 @@
+<div class="container mx-auto mt-4 px-4">
+  <% if flash[:notice] %>
+    <div class="bg-green-600 text-white p-4 rounded-lg mb-4 shadow-md flex items-center">
+      <i class="fas fa-check-circle text-2xl mr-3"></i>
+      <span class="text-sm"><%= flash[:notice] %></span>
+    </div>
+  <% end %>
+  <% if flash[:alert] %>
+    <div class="bg-red-600 text-white p-4 rounded-lg mb-4 shadow-md flex items-center">
+      <i class="fas fa-exclamation-circle text-2xl mr-3"></i>
+      <span class="text-sm"><%= flash[:alert] %></span>
+    </div>
+  <% end %>
+</div>

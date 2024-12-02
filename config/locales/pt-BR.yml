@@ -5,3 +5,48 @@ pt-BR:
       percentage: "Porcentagem"
       boolean: "Booleano"
       custom: "Personalizado"
+  errors:
+    messages:
+      not_saved: "%{resource} não pôde ser salvo devido a %{count} erro(s):"
+      too_short: "É muito curto (mínimo de %{count} caracteres)"
+      taken: "Já está em uso"
+    attributes:
+      email:
+        taken: "Este e-mail já está em uso"
+      password:
+        too_short: "A senha é muito curta (mínimo de %{count} caracteres)"
+  activerecord:
+    models:
+      user:
+        one: "Usuário"
+        other: "Usuários"
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: "Este e-mail já está em uso"
+            password:
+              too_short: "A senha é muito curta (mínimo de %{count} caracteres)"
+  devise:
+    sessions:
+      signed_in: "Login realizado com sucesso."
+      signed_out: "Logout realizado com sucesso."
+      already_signed_out: "Você já se desconectou."
+      user:
+        signed_in: "Bem-vindo de volta!"
+    registrations:
+      signed_up: "Cadastro realizado com sucesso."
+      updated: "Sua conta foi atualizada com sucesso."
+      destroyed: "Sua conta foi deletada com sucesso."
+    failure:
+      unauthenticated: "Você precisa estar autenticado para acessar esta página."
+      unconfirmed: "Você precisa confirmar sua conta antes de acessar."
+      locked: "Sua conta está bloqueada."
+      invalid: "E-mail ou senha inválidos."
+      not_found_in_database: "E-mail ou senha inválidos."
+      timeout: "Sua sessão expirou, faça login novamente."
+      inactive: "Sua conta ainda não foi ativada."
+      user:
+        invalid: "E-mail ou senha inválidos."
+        not_found_in_database: "E-mail ou senha inválidos."

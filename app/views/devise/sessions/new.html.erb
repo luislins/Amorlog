@@ -2,7 +2,9 @@
   <div class="bg-loveRed p-8 rounded-lg shadow-lg w-full max-w-lg">
     <h2 class="text-3xl font-bold mb-6 text-center">Entrar</h2>
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-4" }) do |f| %>
+    <%= form_with model: resource, as: resource_name, url: session_path(resource_name), local: true, class: "space-y-4" do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
       <!-- Campo para Email -->
       <div>
         <%= f.label :email, "Email", class: "block text-sm font-medium" %>
