@@ -39,6 +39,7 @@
         <div class="space-x-4">
           <%= link_to "Início", root_path, class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
           <% if user_signed_in? %>
+            <%= link_to "Timeline", couple_timeline_path(current_user.couple.slug), class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
             <%= link_to "Nossos Eventos", couple_events_path(current_user.couple.slug), class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
             <%= link_to "Nossas Metas", couple_goals_path(current_user.couple.slug), class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
             <%= link_to "Sair", destroy_user_session_path, data: { "turbo-method": :delete }, class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
