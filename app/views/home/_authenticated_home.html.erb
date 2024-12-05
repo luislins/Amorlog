@@ -140,17 +140,12 @@
 </div>
 
 <script>
-  // Função para atualizar o contador de tempo
+  let countdownInterval;
+
   function updateCountdown() {
     const targetDate = new Date("<%= next_event&.date.to_json.delete_prefix('"').delete_suffix('"') %>").getTime();
     const now = new Date().getTime();
     const timeRemaining = Math.abs(targetDate - now);
-
-    // if (timeRemaining <= 0) {
-    //   console.log(timeRemaining)
-    //   document.getElementById('timer').innerHTML = "O evento já chegou!";
-    //   return;
-    // }
 
     const totalSeconds = Math.floor(timeRemaining / 1000);
     const days = Math.floor(totalSeconds / (60 * 60 * 24));
@@ -158,12 +153,19 @@
     const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
     const seconds = Math.floor(totalSeconds % 60);
 
-    // Atualiza os elementos no HTML
     document.getElementById('days').innerHTML = days;
     document.getElementById('hours').innerHTML = hours;
     document.getElementById('minutes').innerHTML = minutes;
     document.getElementById('seconds').innerHTML = seconds;
   }
 
-  setInterval(updateCountdown, 1000);
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.getElementById('countdown')) {
+      countdownInterval = setInterval(updateCountdown, 1000);
+    }
+  });
+
+  window.addEventListener("beforeunload", () => {
+    clearInterval(countdownInterval);
+  });
 </script>
