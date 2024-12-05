@@ -1,14 +1,31 @@
 <div class="container mx-auto mt-4 px-4">
-  <% if flash[:notice] %>
-    <div class="bg-green-600 text-white p-4 rounded-lg mb-4 shadow-md flex items-center">
-      <i class="fas fa-check-circle text-2xl mr-3"></i>
-      <span class="text-sm"><%= flash[:notice] %></span>
-    </div>
-  <% end %>
-  <% if flash[:alert] %>
-    <div class="bg-red-600 text-white p-4 rounded-lg mb-4 shadow-md flex items-center">
-      <i class="fas fa-exclamation-circle text-2xl mr-3"></i>
-      <span class="text-sm"><%= flash[:alert] %></span>
+  <% flash.each do |type, opts| %>
+    <% message = opts.is_a?(Hash) ? opts[:message] : opts %>
+    <% dismissible = opts.is_a?(Hash) ? opts.fetch(:dismissible, true) : true %>
+    <% auto_hide = opts.is_a?(Hash) ? opts.fetch(:auto_hide, true) : false %>
+    <% css_classes, icon =
+      case type.to_sym
+      when :notice then ["bg-green-600", "fas fa-check-circle"]
+      when :alert then ["bg-red-600", "fas fa-exclamation-circle"]
+      else ["bg-gray-600", "fas fa-bell"]
+      end %>
+    <div
+      data-controller="flash"
+      data-flash-auto-hide-value="<%= auto_hide %>"
+      data-flash-hide-after-value="5000"
+      class="flash-message <%= css_classes %> text-white p-4 rounded-lg mb-4 shadow-md flex items-center relative"
+      role="alert"
+    >
+      <i class="<%= icon %> text-2xl mr-3"></i>
+      <span class="text-sm"><%= message %></span>
+      <% if dismissible %>
+        <button
+          class="absolute top-2 right-2 text-white hover:text-gray-200"
+          data-action="click->flash#close"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      <% end %>
     </div>
   <% end %>
 </div>
