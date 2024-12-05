@@ -9,10 +9,19 @@
           <!-- Bloco no lado esquerdo -->
           <div class="w-5/12">
             <div class="p-6 bg-white rounded-lg shadow-lg border-l-4 <%= item[:type] == :event ? 'border-blue-500' : 'border-green-500' %>">
+              <!-- Imagem (somente para metas) -->
+              <% if item[:type] == :goal && item[:image].present? %>
+                <div class="mb-4">
+                  <img src="<%= url_for(item[:image]) %>" alt="Imagem da Meta" class="w-full h-auto rounded-lg shadow-md">
+                </div>
+              <% end %>
+
+              <!-- Data -->
               <p class="text-sm text-gray-500">
-                <%# Mostra a data, para eventos ou metas %>
                 <%= item[:type] == :event ? item[:date].strftime('%d/%m/%Y') : "Meta para: #{item[:date].strftime('%d/%m/%Y')}" %>
               </p>
+
+              <!-- Título e Descrição -->
               <h3 class="text-lg font-semibold text-gray-900"><%= item[:title] %></h3>
               <p class="text-gray-700"><%= item[:description] %></p>
 
@@ -48,9 +57,19 @@
           <!-- Bloco no lado direito -->
           <div class="w-5/12 ml-auto">
             <div class="p-6 bg-white rounded-lg shadow-lg border-r-4 <%= item[:type] == :event ? 'border-blue-500' : 'border-green-500' %>">
+              <!-- Imagem (somente para metas) -->
+              <% if item[:type] == :goal && item[:image].present? %>
+                <div class="mb-4">
+                  <img src="<%= url_for(item[:image]) %>" alt="Imagem da Meta" class="w-full h-auto rounded-lg shadow-md">
+                </div>
+              <% end %>
+
+              <!-- Data -->
               <p class="text-sm text-gray-500">
                 <%= item[:type] == :event ? item[:date].strftime('%d/%m/%Y') : "Meta para: #{item[:date].strftime('%d/%m/%Y')}" %>
               </p>
+
+              <!-- Título e Descrição -->
               <h3 class="text-lg font-semibold text-gray-900"><%= item[:title] %></h3>
               <p class="text-gray-700"><%= item[:description] %></p>
 
