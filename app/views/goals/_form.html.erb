@@ -63,6 +63,19 @@
           <p class="text-sm text-gray-200 mt-2">Marque se a meta foi alcançada.</p>
         </div>
 
+        <!-- Upload de Imagem -->
+        <div class="flex flex-col mb-6" data-controller="image-preview">
+          <%= form.label :image, "Adicionar Imagem (Opcional)", class: "block text-base font-semibold text-white mb-2" %>
+          <%= form.file_field :image, 
+                accept: "image/*", 
+                data: { action: "change->image-preview#preview", "image-preview-target" => "input" },
+                class: "w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-loveRed text-black" %>
+
+          <!-- Pré-visualização -->
+          <div class="mt-4" data-image-preview-target="previewContainer">
+            <!-- Pré-visualização será inserida aqui -->
+          </div>
+        </div>
         <!-- Botão de Salvar -->
         <div class="text-center">
           <%= form.submit @goal.new_record? ? "Salvar Meta" : "Salvar Alterações", 
