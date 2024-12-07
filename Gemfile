@@ -70,6 +70,6 @@ group :test do
   gem 'selenium-webdriver'
 end
 
+gem 'active_storage_validations'
 gem 'devise'
 gem 'tailwindcss-rails', '~> 3.0'
-gem 'active_storage_validations'

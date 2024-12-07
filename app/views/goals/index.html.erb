@@ -8,6 +8,7 @@
         </h1>
         <%= link_to "Adicionar Meta", new_couple_goal_path(@couple.slug), class: "bg-green-500 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-600 shadow-xl transition-transform transform hover:scale-105" %>
       </div>
+      <p class="text-gray-300 mt-2">Planeje e conquiste as metas mais importantes da sua vida a dois.</p>
     </div>
 
     <% pending_goals = @goals.where(achieved: false).order(due_date: :asc) %>

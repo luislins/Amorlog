@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   devise_for :users, controllers: { registrations: 'users/registrations' }
-  
+
   resources :couples, param: :slug do
     get 'timeline', to: 'timelines#index', as: 'timeline'
     resources :events
