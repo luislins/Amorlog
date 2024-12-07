@@ -3,10 +3,10 @@
     <!-- Título e Botão de Adicionar -->
     <div class="bg-gray-800 py-6 px-8 rounded-lg shadow-lg mb-12">
       <div class="flex justify-between items-center">
-        <h1 class="text-3xl font-extrabold text-white tracking-wide">
+        <h1 class="text-4xl font-bold text-white tracking-wide">
           Metas de <span class="text-loveRed"><%= @couple.partner_1 %></span> e <span class="text-loveRed"><%= @couple.partner_2 %></span>
         </h1>
-        <%= link_to "Adicionar Meta", new_couple_goal_path(@couple.slug), class: "bg-green-500 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-600 shadow transition-transform transform hover:scale-105" %>
+        <%= link_to "Adicionar Meta", new_couple_goal_path(@couple.slug), class: "bg-green-500 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-600 shadow-xl transition-transform transform hover:scale-105" %>
       </div>
     </div>
 
@@ -17,109 +17,94 @@
     <div class="mb-16">
       <h2 class="text-3xl font-bold text-green-400 mb-6 text-center">Metas Pendentes</h2>
       <% if pending_goals.any? %>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <% pending_goals.each do |goal| %>
-            <div class="flex justify-between flex-col bg-green-700 p-6 rounded-lg shadow-lg hover:translate-y-1 transition-transform min-h-[250px]">
-              <h2 class="text-2xl font-bold text-white mb-2"><%= goal.title %></h2>
-              <p class="text-sm text-gray-200 mb-4"><%= goal.description %></p>
-              <p class="text-sm text-gray-300 mb-4">Data Limite: <%= goal.due_date.strftime("%d/%m/%Y") %></p>
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-1 flex flex-col justify-between min-h-[250px]">
+              <h3 class="text-2xl font-bold text-white mb-2"><%= goal.title %></h3>
+              <p class="text-sm text-gray-300 mb-4"><%= goal.description %></p>
+              <p class="text-sm text-gray-400 mb-4">Data Limite: <%= goal.due_date.strftime("%d/%m/%Y") %></p>
 
-              <!-- Goal Meter -->
               <% if goal.numeric? %>
                 <% progress = ((goal.current_value.to_f / goal.numeric_value.to_f) * 100).round(2) %>
-                
-                <!-- Barra de Progresso -->
                 <div class="w-full bg-gray-600 rounded-full h-4 mb-4">
                   <div class="bg-loveRed h-4 rounded-full" style="width: <%= progress %>%;"></div>
                 </div>
-
-                <!-- Informações do Goal Meter -->
-                <p class="text-sm text-gray-300 mb-2">
-                  <span class="font-semibold text-white">Valor Atual:</span> <%= goal.current_value %> / <%= goal.numeric_value %>
-                </p>
-                <p class="text-sm text-gray-300 mb-4">
-                  <span class="font-semibold text-white">Progresso:</span> <%= progress %>%
+                <p class="text-sm text-gray-300">
+                  Progresso: <span class="font-semibold text-white"><%= progress %>%</span>
                 </p>
               <% else %>
-                <!-- Placeholder para manter o layout uniforme -->
-                <div class="h-16 mb-8"></div>
+                <p class="text-yellow-400 font-bold mb-4">Meta em andamento</p>
               <% end %>
 
-              <!-- Indicador de Pendente -->
-              <span class="w-24 text-center px-3 py-1 text-xs font-bold bg-yellow-500 text-black rounded-full">
-                Pendente
-              </span>
+              <!-- Botões de Ação -->
+              <div class="flex justify-between mt-4 space-x-4">
+                <!-- Botão Concluir Meta -->
+                <%= link_to mark_as_achieved_couple_goal_path(@couple.slug, goal), data: { "turbo-method": :patch }, class: "text-green-500 hover:text-green-700 flex items-center gap-2 transition-all transform hover:scale-110" do %>
+                  <i class="fas fa-check-circle"></i> Concluir
+                <% end %>
 
-              <!-- Botões de Editar e Excluir -->
-              <div class="mt-4 flex justify-between items-start">
-                <!-- Botões Alinhados à Esquerda -->
-                <div class="flex flex-col space-y-2">
-                  <!-- Botão Concluir Meta -->
-                  <%= link_to "Concluir Meta", mark_as_achieved_couple_goal_path(@couple.slug, goal), data: { "turbo-method": :patch }, class: "text-white bg-green-600 px-4 py-2 rounded-md font-semibold hover:bg-yellow-500 transition-all duration-300" %>
+                <% if goal.numeric? %>
                   <!-- Botão Adicionar Valor -->
-                  <% if goal.numeric?%>
-                    <button data-action="click->goal-modal#open" data-goal-id="<%= goal.id %>" class="text-white bg-purple-600 px-4 py-2 rounded-md font-semibold hover:bg-purple-700">
-                      Adicionar Valor
-                    </button>
-                  <% end %>
-                </div>
+                  <button data-action="click->goal-modal#open" data-goal-id="<%= goal.id %>" class="text-purple-500 hover:text-purple-700 flex items-center gap-2 transition-all transform hover:scale-110">
+                    <i class="fas fa-plus"></i> Adicionar Valor
+                  </button>
+                <% end %>
 
-                <!-- Botões Alinhados à Direita -->
-                <div class="flex space-x-4 self-end">
-                  <!-- Botão Editar -->
-                  <%= link_to "Editar", edit_couple_goal_path(@couple.slug, goal), class: "text-white bg-blue-600 px-4 py-2 rounded-md font-semibold hover:bg-blue-700" %>
-                  <!-- Botão Excluir -->
-                  <%= link_to "Excluir", couple_goal_path(@couple.slug, goal), method: :delete, data: { confirm: 'Tem certeza que deseja excluir esta meta?' }, class: "text-white bg-red-600 px-4 py-2 rounded-md font-semibold hover:bg-red-700" %>
-                </div>
+                <!-- Botão Editar -->
+                <%= link_to edit_couple_goal_path(@couple.slug, goal), class: "text-loveRed hover:text-red-600 flex items-center gap-2 transition-all transform hover:scale-110" do %>
+                  <i class="fas fa-edit"></i> Editar
+                <% end %>
+
+                <!-- Botão Excluir -->
+                <%= link_to couple_goal_path(@couple.slug, goal), method: :delete, data: { confirm: 'Tem certeza que deseja excluir esta meta?' }, class: "text-red-600 hover:text-red-800 flex items-center gap-2 transition-all transform hover:scale-110" do %>
+                  <i class="fas fa-trash-alt"></i> Excluir
+                <% end %>
               </div>
-
             </div>
           <% end %>
         </div>
       <% else %>
-        <p class="text-gray-300 text-center">Nenhuma meta pendente registrada.</p>
+        <p class="text-center text-gray-400">Nenhuma meta pendente registrada.</p>
       <% end %>
     </div>
 
+    <!-- Separador -->
     <div class="border-t border-gray-700 mb-16"></div>
 
-     <!-- Metas Finalizadas -->
+    <!-- Metas Finalizadas -->
     <div class="mb-16">
       <h2 class="text-3xl font-bold text-blue-400 mb-6 text-center">Metas Finalizadas</h2>
       <% if achieved_goals.any? %>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <% achieved_goals.each do |goal| %>
-            <!-- Card da Meta Finalizada -->
-            <div class="flex justify-between flex-col bg-gray-700 p-6 rounded-lg shadow-lg hover:translate-y-1 transition-transform min-h-[250px]">
-              <h2 class="text-2xl font-bold text-white mb-2"><%= goal.title %></h2>
-              <p class="text-sm text-gray-200 mb-4"><%= goal.description %></p>
-              <p class="text-sm text-gray-300 mb-4">Concluída em: <%= goal.updated_at.strftime("%d/%m/%Y") %></p>
-              <span class="w-24 text-center px-3 py-1 text-xs font-bold bg-blue-500 text-white rounded-full">
-                Finalizada
-              </span>
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-1 min-h-[200px] flex flex-col justify-between">
+              <h3 class="text-2xl font-bold text-white mb-2"><%= goal.title %></h3>
+              <p class="text-sm text-gray-300 mb-4"><%= goal.description %></p>
+              <p class="text-sm text-gray-400 mb-4">Concluída em: <%= goal.updated_at.strftime("%d/%m/%Y") %></p>
+              <span class="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full text-center">Finalizada</span>
             </div>
           <% end %>
         </div>
       <% else %>
-        <p class="text-gray-300 text-center">Nenhuma meta finalizada registrada.</p>
+        <p class="text-center text-gray-400">Nenhuma meta finalizada registrada.</p>
       <% end %>
     </div>
   </div>
+
   <!-- Modal -->
   <div data-goal-modal-target="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
     <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-      <h2 class="text-lg font-semibold text-gray-800 mb-4">Adicionar Valor</h2>
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Adicionar Valor</h2>
       <%= form_with url: update_current_value_couple_goal_path(@couple.slug, 0), method: :patch, local: true, data: { base_url: update_current_value_couple_goal_path(@couple.slug, 0), goal_modal_target: "form" } do |f| %>
         <div class="mb-4">
           <%= f.label :value_to_add, "Valor", class: "block text-sm font-medium text-gray-700" %>
-          <%= f.number_field :value_to_add, step: "0.01", class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm", placeholder: "Digite o valor" %>
+          <%= f.number_field :value_to_add, step: "0.01", class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-loveRed focus:border-loveRed sm:text-sm" %>
         </div>
         <div class="flex justify-end">
-          <button data-action="click->goal-modal#close" type="button" class="text-gray-700 bg-gray-200 px-4 py-2 rounded-md mr-2">Cancelar</button>
-          <%= f.submit "Adicionar", class: "bg-loveRed text-white px-4 py-2 rounded-md font-semibold hover:bg-red-600 transition-all duration-300" %>
+          <button data-action="click->goal-modal#close" type="button" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md mr-2">Cancelar</button>
+          <%= f.submit "Adicionar", class: "bg-loveRed text-white px-4 py-2 rounded-md font-semibold hover:bg-red-600 transition-all" %>
         </div>
       <% end %>
     </div>
   </div>
 </div>
-

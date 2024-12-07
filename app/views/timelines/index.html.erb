@@ -1,6 +1,6 @@
-<div class="relative container mx-auto px-4 py-8">
+<div class="relative container mx-auto py-16 px-6">
   <!-- Linha central da timeline -->
-  <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-1 bg-gray-200 h-full"></div>
+  <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-1 bg-gray-600 h-full"></div>
 
   <% if @timeline_items.present? %>
     <% @timeline_items.each_with_index do |item, index| %>
@@ -8,7 +8,7 @@
         <% if index.even? %>
           <!-- Bloco no lado esquerdo -->
           <div class="w-5/12">
-            <div class="p-6 bg-white rounded-lg shadow-lg border-l-4 <%= item[:type] == :event ? 'border-blue-500' : 'border-green-500' %>">
+            <div class="p-6 bg-gray-800 rounded-lg shadow-xl border-l-4 <%= item[:type] == :event ? 'border-loveRed' : 'border-green-500' %> hover:shadow-2xl transition-shadow duration-300">
               <!-- Imagem (somente para metas) -->
               <% if item[:type] == :goal && item[:image].present? %>
                 <div class="mb-4">
@@ -17,26 +17,26 @@
               <% end %>
 
               <!-- Data -->
-              <p class="text-sm text-gray-500">
+              <p class="text-sm text-gray-400">
                 <%= item[:type] == :event ? item[:date].strftime('%d/%m/%Y') : "Meta para: #{item[:date].strftime('%d/%m/%Y')}" %>
               </p>
 
               <!-- Título e Descrição -->
-              <h3 class="text-lg font-semibold text-gray-900"><%= item[:title] %></h3>
-              <p class="text-gray-700"><%= item[:description] %></p>
+              <h3 class="text-xl font-bold text-white mb-2"><%= item[:title] %></h3>
+              <p class="text-gray-300"><%= item[:description] %></p>
 
               <% if item[:type] == :event %>
                 <!-- Exibe o tipo do evento -->
-                <p class="mt-2 text-sm text-blue-500">Tipo: <%= item[:event_type].presence || 'Sem categoria' %></p>
+                <p class="mt-2 text-sm text-loveRed font-semibold">Tipo: <%= item[:event_type].presence || 'Sem categoria' %></p>
               <% else %>
                 <!-- Exibe o progresso da meta -->
                 <% if item[:achieved] %>
-                  <p class="mt-2 text-sm text-green-500">Meta concluída! 🎉</p>
+                  <p class="mt-2 text-sm text-green-400 font-semibold">Meta concluída! 🎉</p>
                 <% else %>
                   <% if item[:kind] == 'numeric' %>
-                    <p class="mt-2 text-sm text-yellow-500">Progresso: <%= item[:current_value] %> / <%= item[:numeric_value] %></p>
+                    <p class="mt-2 text-sm text-yellow-400 font-semibold">Progresso: <%= item[:current_value] %> / <%= item[:numeric_value] %></p>
                   <% else %>
-                    <p class="mt-2 text-sm text-yellow-500">Meta ainda em progresso.</p>
+                    <p class="mt-2 text-sm text-yellow-400 font-semibold">Meta ainda em progresso.</p>
                   <% end %>
                 <% end %>
               <% end %>
@@ -45,7 +45,7 @@
         <% end %>
 
         <!-- Ponto central -->
-        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-8 <%= item[:type] == :event ? 'bg-blue-500' : 'bg-green-500' %> rounded-full flex items-center justify-center shadow-md">
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-8 <%= item[:type] == :event ? 'bg-loveRed' : 'bg-green-500' %> rounded-full flex items-center justify-center shadow-md">
           <% if item[:type] == :event %>
             <i class="fas fa-calendar text-white"></i>
           <% else %>
@@ -56,7 +56,7 @@
         <% unless index.even? %>
           <!-- Bloco no lado direito -->
           <div class="w-5/12 ml-auto">
-            <div class="p-6 bg-white rounded-lg shadow-lg border-r-4 <%= item[:type] == :event ? 'border-blue-500' : 'border-green-500' %>">
+            <div class="p-6 bg-gray-800 rounded-lg shadow-xl border-r-4 <%= item[:type] == :event ? 'border-loveRed' : 'border-green-500' %> hover:shadow-2xl transition-shadow duration-300">
               <!-- Imagem (somente para metas) -->
               <% if item[:type] == :goal && item[:image].present? %>
                 <div class="mb-4">
@@ -65,24 +65,24 @@
               <% end %>
 
               <!-- Data -->
-              <p class="text-sm text-gray-500">
+              <p class="text-sm text-gray-400">
                 <%= item[:type] == :event ? item[:date].strftime('%d/%m/%Y') : "Meta para: #{item[:date].strftime('%d/%m/%Y')}" %>
               </p>
 
               <!-- Título e Descrição -->
-              <h3 class="text-lg font-semibold text-gray-900"><%= item[:title] %></h3>
-              <p class="text-gray-700"><%= item[:description] %></p>
+              <h3 class="text-xl font-bold text-white mb-2"><%= item[:title] %></h3>
+              <p class="text-gray-300"><%= item[:description] %></p>
 
               <% if item[:type] == :event %>
-                <p class="mt-2 text-sm text-blue-500">Tipo: <%= item[:event_type].presence || 'Sem categoria' %></p>
+                <p class="mt-2 text-sm text-loveRed font-semibold">Tipo: <%= item[:event_type].presence || 'Sem categoria' %></p>
               <% else %>
                 <% if item[:achieved] %>
-                  <p class="mt-2 text-sm text-green-500">Meta concluída! 🎉</p>
+                  <p class="mt-2 text-sm text-green-400 font-semibold">Meta concluída! 🎉</p>
                 <% else %>
                   <% if item[:kind] == 'numeric' %>
-                    <p class="mt-2 text-sm text-yellow-500">Progresso: <%= item[:current_value] %> / <%= item[:numeric_value] %></p>
+                    <p class="mt-2 text-sm text-yellow-400 font-semibold">Progresso: <%= item[:current_value] %> / <%= item[:numeric_value] %></p>
                   <% else %>
-                    <p class="mt-2 text-sm text-yellow-500">Meta ainda em progresso.</p>
+                    <p class="mt-2 text-sm text-yellow-400 font-semibold">Meta ainda em progresso.</p>
                   <% end %>
                 <% end %>
               <% end %>
@@ -92,6 +92,6 @@
       </div>
     <% end %>
   <% else %>
-    <p class="text-gray-500 text-center">Nenhum evento ou meta disponível para exibir na timeline.</p>
+    <p class="text-gray-400 text-center">Nenhum evento ou meta disponível para exibir na timeline.</p>
   <% end %>
 </div>
