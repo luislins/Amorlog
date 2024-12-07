@@ -140,7 +140,9 @@
 </div>
 
 <script>
-  let countdownInterval;
+  if (typeof countdownInterval === 'undefined') {
+    var countdownInterval;
+  }
 
   function updateCountdown() {
     const targetDate = new Date("<%= next_event&.date.to_json.delete_prefix('"').delete_suffix('"') %>").getTime();
@@ -153,14 +155,37 @@
     const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
     const seconds = Math.floor(totalSeconds % 60);
 
-    document.getElementById('days').innerHTML = days;
-    document.getElementById('hours').innerHTML = hours;
-    document.getElementById('minutes').innerHTML = minutes;
-    document.getElementById('seconds').innerHTML = seconds;
+    const daysElement = document.getElementById('days');
+    const hoursElement = document.getElementById('hours');
+    const minutesElement = document.getElementById('minutes');
+    const secondsElement = document.getElementById('seconds');
+
+    if (daysElement && hoursElement && minutesElement && secondsElement) {
+      daysElement.innerHTML = days;
+      hoursElement.innerHTML = hours;
+      minutesElement.innerHTML = minutes;
+      secondsElement.innerHTML = seconds;
+    } else {
+      clearInterval(countdownInterval);
+    }
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    if (document.getElementById('countdown')) {
+    const countdownElement = document.getElementById('countdown');
+    if (countdownElement && typeof countdownInterval === 'undefined') {
+      countdownInterval = setInterval(updateCountdown, 1000);
+    }
+  });
+
+  window.addEventListener("beforeunload", () => {
+    clearInterval(countdownInterval);
+    countdownInterval = undefined;
+  });
+  
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const countdownElement = document.getElementById('countdown');
+    if (countdownElement) {
       countdownInterval = setInterval(updateCountdown, 1000);
     }
   });
