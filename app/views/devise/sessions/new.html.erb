@@ -1,22 +1,22 @@
 <div class="min-h-screen bg-loveBlack text-white flex items-center justify-center">
-  <div class="bg-loveRed p-8 rounded-lg shadow-lg w-full max-w-lg">
-    <h2 class="text-3xl font-bold mb-6 text-center">Entrar</h2>
+  <div class="bg-gradient-to-br from-loveRed via-red-600 to-red-800 p-8 rounded-2xl shadow-2xl w-full max-w-lg">
+    <h2 class="text-4xl font-extrabold mb-6 text-center text-white">Entrar</h2>
 
-    <%= form_with model: resource, as: resource_name, url: session_path(resource_name), local: true, class: "space-y-4" do |f| %>
+    <%= form_with model: resource, as: resource_name, url: session_path(resource_name), local: true, class: "space-y-6" do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 
       <!-- Campo para Email -->
       <div>
-        <%= f.label :email, "Email", class: "block text-sm font-medium" %>
+        <%= f.label :email, "Email", class: "block text-sm font-semibold text-white mb-1" %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email", 
-              class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveRed focus:border-loveRed text-black" %>
+              class: "mt-1 w-full rounded-lg border-gray-300 shadow-md focus:ring-loveRed focus:border-loveRed text-black px-4 py-2" %>
       </div>
 
       <!-- Campo para Senha -->
       <div>
-        <%= f.label :password, "Senha", class: "block text-sm font-medium" %>
+        <%= f.label :password, "Senha", class: "block text-sm font-semibold text-white mb-1" %>
         <%= f.password_field :password, autocomplete: "current-password", 
-              class: "mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-loveRed focus:border-loveRed text-black" %>
+              class: "mt-1 w-full rounded-lg border-gray-300 shadow-md focus:ring-loveRed focus:border-loveRed text-black px-4 py-2" %>
       </div>
 
       <!-- Lembrar-me -->
@@ -30,17 +30,19 @@
       <!-- Botão de Login -->
       <div class="text-center">
         <%= f.submit "Entrar", 
-              class: "bg-loveBlack text-loveRed px-6 py-2 rounded-md font-semibold hover:bg-gray-800 cursor-pointer" %>
+              class: "bg-loveBlack text-loveRed px-6 py-3 rounded-lg font-bold hover:bg-gray-800 hover:text-white cursor-pointer shadow-lg transition-all transform hover:scale-105" %>
       </div>
     <% end %>
 
     <!-- Links de Recuperação e Registro -->
-    <div class="text-center text-gray-300 mt-4">
+    <div class="text-center text-gray-300 mt-6">
       <% if controller_name != "registrations" %>
-        <%= link_to "Registrar-se", new_user_registration_path, class: "text-loveRed underline mr-4" %>
+        <%= link_to "Registrar-se", new_user_registration_path, 
+                    class: "text-loveRed underline hover:text-red-400 transition-all mr-4" %>
       <% end %>
       <% if controller_name != "passwords" %>
-        <%= link_to "Esqueceu sua senha?", new_password_path(resource_name), class: "text-loveRed underline" %>
+        <%= link_to "Esqueceu sua senha?", new_password_path(resource_name), 
+                    class: "text-loveRed underline hover:text-red-400 transition-all" %>
       <% end %>
     </div>
   </div>
