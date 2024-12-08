@@ -3,13 +3,12 @@
     <!-- Título e Botão de Adicionar -->
     <div class="bg-gray-800 py-6 px-8 rounded-lg shadow-lg mb-12">
       <div class="flex justify-between items-center">
-          <h1 class="text-4xl font-extrabold text-white tracking-wide">
-            Momentos de <span class="text-loveRed"><%= @couple.partner_1_first_name %></span> e <span class="text-loveRed"><%= @couple.partner_2_first_name %></span>
-          </h1>
-          <%= link_to "Adicionar Evento", new_couple_event_path(@couple.slug),
-                  class: "bg-loveRed text-white px-6 py-3 rounded-md font-semibold hover:bg-red-600 shadow transition-transform transform hover:scale-105" %>
+        <h1 class="text-4xl font-bold text-white tracking-wide">
+          Momentos de <span class="text-loveRed"><%= @couple.partner_1_first_name %></span> e <span class="text-loveRed"><%= @couple.partner_2_first_name %></span>
+        </h1>
+        <%= link_to "Adicionar Evento", new_couple_event_path(@couple.slug), class: "bg-loveRed text-white px-6 py-3 rounded-md font-semibold hover:bg-red-600 shadow-xl transition-transform transform hover:scale-105" %>
       </div>
-      <p class="text-gray-300 mt-2">Organize e celebre os momentos mais importantes da sua vida juntos.</p> 
+      <p class="text-gray-300 mt-2">Organize e celebre os momentos mais importantes da sua vida juntos.</p>
     </div>
 
     <% upcoming_events = @events.select { |event| event.date >= Date.today }.sort_by(&:date) %>
@@ -21,9 +20,9 @@
       <% if upcoming_events.any? %>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <% upcoming_events.each do |event| %>
-            <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:translate-y-1 transition-transform">
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-1 flex flex-col justify-between">
               <h2 class="text-2xl font-bold text-white mb-2"><%= event.title %></h2>
-              <p class="text-sm text-gray-400 mb-4"><%= event.description %></p>
+              <p class="text-sm text-gray-400 mb-4 line-clamp-3"><%= event.description %></p>
               <div class="flex items-center justify-between">
                 <span class="text-sm font-semibold text-gray-300">
                   Data: <%= event.date.strftime("%d/%m/%Y") %>
@@ -33,7 +32,7 @@
                 </span>
               </div>
 
-              <!-- Botões de Editar e Excluir com estilo mais bonito -->
+              <!-- Botões de Ação -->
               <div class="flex justify-between mt-4 space-x-4">
                 <%= link_to edit_couple_event_path(@couple.slug, event), class: "text-loveRed hover:text-red-600 flex items-center gap-2 transition-all transform hover:scale-110" do %>
                   <i class="fas fa-edit"></i> Editar
@@ -60,9 +59,9 @@
       <% if past_events.any? %>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <% past_events.each do |event| %>
-            <div class="bg-gray-700 p-6 rounded-lg shadow-md hover:translate-y-1 transition-transform">
+            <div class="bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-1 flex flex-col justify-between">
               <h2 class="text-2xl font-bold text-white mb-2"><%= event.title %></h2>
-              <p class="text-sm text-gray-400 mb-4"><%= event.description %></p>
+              <p class="text-sm text-gray-400 mb-4 line-clamp-3"><%= event.description %></p>
               <div class="flex items-center justify-between">
                 <span class="text-sm font-semibold text-gray-300">
                   Data: <%= event.date.strftime("%d/%m/%Y") %>
@@ -72,7 +71,7 @@
                 </span>
               </div>
 
-              <!-- Botões de Editar e Excluir com estilo mais bonito -->
+              <!-- Botões de Ação -->
               <div class="flex justify-between mt-4 space-x-4">
                 <%= link_to edit_couple_event_path(@couple.slug, event), class: "text-loveRed hover:text-red-600 flex items-center gap-2 transition-all transform hover:scale-110" do %>
                   <i class="fas fa-edit"></i> Editar
