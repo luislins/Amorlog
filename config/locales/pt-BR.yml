@@ -5,6 +5,7 @@ pt-BR:
       percentage: "Porcentagem"
       boolean: "Booleano"
       custom: "Personalizado"
+
   errors:
     messages:
       not_saved: "%{resource} não pôde ser salvo devido a %{count} erro(s):"
@@ -15,7 +16,11 @@ pt-BR:
         taken: "Este e-mail já está em uso"
       password:
         too_short: "A senha é muito curta (mínimo de %{count} caracteres)"
+
   activerecord:
+    attributes:
+      goal:
+        current_value: "Valor atual"
     models:
       user:
         one: "Usuário"
@@ -30,6 +35,7 @@ pt-BR:
               too_short: "A senha é muito curta (mínimo de %{count} caracteres)"
             password_confirmation:
               confirmation: "As senhas precisam ser iguais. Verifique e tente novamente."
+
   devise:
     sessions:
       signed_in: "Login realizado com sucesso."

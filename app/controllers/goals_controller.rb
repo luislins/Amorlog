@@ -1,9 +1,9 @@
 class GoalsController < ApplicationController
     before_action :set_couple
+    before_action :set_goals, only: %i[index update]
     before_action :set_goal, only: %i[show edit update destroy mark_as_achieved]
 
     def index
-      @goals = @couple.goals
       @pending_goals = @goals.where(achieved: false).order(due_date: :asc)
       @completed_goals = @goals.where(achieved: true).order(due_date: :asc)
     end
@@ -27,7 +27,7 @@ class GoalsController < ApplicationController
       if @goal.update(goal_params)
         redirect_to couple_goals_path(@couple.slug), notice: 'Meta atualizada com sucesso!'
       else
-        render :edit, status: :unprocessable_entity
+        redirect_to couple_goals_path(@couple.slug), alert: @goal.errors.full_messages.to_sentence
       end
     end
 
@@ -44,36 +44,23 @@ class GoalsController < ApplicationController
       end
     end
 
-    def update_current_value
-      @goal = Goal.find(params[:id])
-      value_to_add = params[:value_to_add].to_f
-
-      if @goal.current_value + value_to_add > @goal.numeric_value
-        flash[:alert] = 'O valor adicionado excede o valor total da meta.'
-      else
-        @goal.increment!(:current_value, value_to_add)
-        flash[:notice] = 'Valor adicionado com sucesso!'
-      end
-
-      redirect_to couple_goals_path(@goal.couple)
-    end
-
     private
 
     def set_couple
       @couple = Couple.find_by(slug: params[:couple_slug])
-
-      # Verifica se o casal pertence ao usuário autenticado
       return unless @couple.nil? || @couple.user != current_user
-
-        redirect_to root_path, alert: 'Acesso não autorizado.'
+      redirect_to root_path, alert: 'Acesso não autorizado.'
     end
 
     def set_goal
       @goal = @couple.goals.find(params[:id])
     end
 
+    def set_goals
+      @goals = @couple.goals
+    end
+
     def goal_params
-      params.require(:goal).permit(:title, :description, :due_date, :achieved, :kind, :numeric_value, :image)
+      params.require(:goal).permit(:title, :description, :due_date, :achieved, :kind, :numeric_value, :image, :current_value)
     end
 end

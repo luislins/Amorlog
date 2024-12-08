@@ -11,7 +11,6 @@ Rails.application.routes.draw do
     resources :goals do
       member do
         patch :mark_as_achieved
-        patch :update_current_value
       end
     end
   end

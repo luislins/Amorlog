@@ -1,22 +1,25 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["modal", "form"];
-
-  connect() {
-  }
+  static targets = ["modal", "form", "currentValueField"];
 
   open(event) {
-    event.preventDefault();
+    // Obtém o ID do goal a partir do botão clicado
     const goalId = event.currentTarget.dataset.goalId;
-    const formAction = this.formTarget.getAttribute("data-base-url").replace("0", goalId);
-    console.log(formAction)
-    this.formTarget.setAttribute("action", formAction);
+
+    // Configura a URL do formulário com o ID correto
+    this.formTarget.action = event.currentTarget.dataset.baseUrl.replace(":id", goalId);
+
+    // Carrega o valor atual do current_value no campo numérico
+    const currentValue = event.currentTarget.dataset.currentValue;
+    this.currentValueFieldTarget.value = currentValue;
+
+    // Mostra o modal
     this.modalTarget.classList.remove("hidden");
   }
 
-  close(event) {
-    event.preventDefault();
-    this.modalTarget.classList.add("hidden")
+  close() {
+    // Esconde o modal
+    this.modalTarget.classList.add("hidden");
   }
 }
