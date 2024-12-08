@@ -19,10 +19,10 @@ class TimelinesController < ApplicationController
         description: goal.description,
         date: goal.due_date,
         achieved: goal.achieved,
-        kind: goal.kind == 1 ? 'numeric' : 'boolean',
+        kind: goal.kind, # Preserva o valor original para flexibilidade
         numeric_value: goal.numeric_value,
         current_value: goal.current_value,
-        image: goal.image
+        images: goal.images.map { |image| url_for(image) } # Gera URLs para as imagens
       }
     end
 

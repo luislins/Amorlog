@@ -44,6 +44,13 @@ class GoalsController < ApplicationController
       end
     end
 
+    def remove_image
+      @goal = Goal.find(params[:id])
+      image = @goal.images.find(params[:image_id])
+      image.purge
+      redirect_to edit_couple_goal_path(@couple.slug, @goal), notice: "Imagem removida com sucesso."
+    end
+
     private
 
     def set_couple
@@ -61,6 +68,14 @@ class GoalsController < ApplicationController
     end
 
     def goal_params
-      params.require(:goal).permit(:title, :description, :due_date, :achieved, :kind, :numeric_value, :image, :current_value)
+      params.require(:goal).permit(
+        :title,
+        :description,
+        :due_date,
+        :kind,
+        :numeric_value,
+        :achieved,
+        images: []
+      )
     end
 end

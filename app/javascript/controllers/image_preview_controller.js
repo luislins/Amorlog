@@ -1,34 +1,24 @@
 import { Controller } from "@hotwired/stimulus";
 
-// Connects to data-controller="image-preview"
 export default class extends Controller {
   static targets = ["input", "previewContainer"];
 
   preview() {
-    const fileInput = this.inputTarget;
-    const previewContainer = this.previewContainerTarget;
+    const input = this.inputTarget;
+    const container = this.previewContainerTarget;
 
-    // Limpa qualquer pré-visualização existente
-    previewContainer.innerHTML = "";
+    // Limpa pré-visualizações antigas
+    container.innerHTML = "";
 
-    if (fileInput.files && fileInput.files[0]) {
-      const file = fileInput.files[0];
-
-      // Garante que o arquivo é uma imagem
-      if (!file.type.startsWith("image/")) {
-        alert("Por favor, selecione um arquivo de imagem válido.");
-        return;
-      }
-
+    Array.from(input.files).forEach(file => {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = event => {
         const img = document.createElement("img");
-        img.src = e.target.result;
-        img.alt = "Pré-visualização da imagem";
-        img.className = "rounded-lg shadow-md max-w-full h-auto mt-2";
-        previewContainer.appendChild(img);
+        img.src = event.target.result;
+        img.classList.add("rounded-lg", "shadow-md", "w-full", "h-40", "object-cover", "mb-2");
+        container.appendChild(img);
       };
       reader.readAsDataURL(file);
-    }
+    });
   }
 }

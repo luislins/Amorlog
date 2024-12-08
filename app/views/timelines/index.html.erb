@@ -9,12 +9,16 @@
           <!-- Bloco no lado esquerdo -->
           <div class="w-5/12">
             <div class="relative bg-gradient-to-tr from-gray-800 via-gray-700 to-gray-900 rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-300">
-              <!-- Imagem -->
-              <% if item[:type] == :goal && item[:image].present? %>
-                <div class="h-48 w-full overflow-hidden">
-                  <img src="<%= url_for(item[:image]) %>" 
-                       alt="Imagem da Meta" 
-                       class="w-full h-full object-cover">
+              <!-- Imagens para metas -->
+              <% if item[:type] == :goal && item[:images]&.any? %>
+                <div class="grid grid-cols-2 gap-2 mb-4 p-2">
+                  <% item[:images].each do |image| %>
+                    <div class="h-32 w-full overflow-hidden rounded-lg">
+                      <img src="<%= url_for(image) %>" 
+                           alt="Imagem da Meta" 
+                           class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                    </div>
+                  <% end %>
                 </div>
               <% end %>
 
@@ -47,7 +51,7 @@
         <% end %>
 
         <!-- Ponto central -->
-        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-10 h-10 <%= item[:type] == :event ? 'bg-loveRed' : 'bg-green-500' %> rounded-full flex items-center justify-center shadow-lg border-4 border-white">
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-10 h-10 <%= item[:type] == :event ? 'bg-loveRed' : 'bg-green-500' %> rounded-full flex items-center justify-center shadow-lg border-4 border-white z-10">
           <% if item[:type] == :event %>
             <i class="fas fa-calendar text-white"></i>
           <% else %>
@@ -59,12 +63,16 @@
           <!-- Bloco no lado direito -->
           <div class="w-5/12 ml-auto">
             <div class="relative bg-gradient-to-tr from-gray-800 via-gray-700 to-gray-900 rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-300">
-              <!-- Imagem -->
-              <% if item[:type] == :goal && item[:image].present? %>
-                <div class="h-48 w-full overflow-hidden">
-                  <img src="<%= url_for(item[:image]) %>" 
-                       alt="Imagem da Meta" 
-                       class="w-full h-full object-cover">
+              <!-- Imagens para metas -->
+              <% if item[:type] == :goal && item[:images]&.any? %>
+                <div class="grid grid-cols-2 gap-2 mb-4 p-2">
+                  <% item[:images].each do |image| %>
+                    <div class="h-32 w-full overflow-hidden rounded-lg">
+                      <img src="<%= url_for(image) %>" 
+                           alt="Imagem da Meta" 
+                           class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                    </div>
+                  <% end %>
                 </div>
               <% end %>
 
