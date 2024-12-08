@@ -7,16 +7,23 @@ class Couple < ApplicationRecord
 
   before_validation :generate_slug
 
+  #override id -> slug
   def to_param
     slug
+  end
+
+  def partner_1_first_name
+    partner_1.split.first
+  end
+
+  def partner_2_first_name
+    partner_2.split.first
   end
 
   private
 
   def generate_slug
-    # Usa os primeiros nomes para o slug
     return unless partner_1.present? && partner_2.present?
-
-      self.slug = "#{partner_1.split.first}-e-#{partner_2.split.first}".parameterize
+    self.slug = "#{partner_1.split.first}-e-#{partner_2.split.first}".parameterize
   end
 end

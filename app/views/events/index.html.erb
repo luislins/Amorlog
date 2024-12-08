@@ -4,7 +4,7 @@
     <div class="bg-gray-800 py-6 px-8 rounded-lg shadow-lg mb-12">
       <div class="flex justify-between items-center">
           <h1 class="text-4xl font-extrabold text-white tracking-wide">
-            Momentos de <span class="text-loveRed"><%= @couple.partner_1 %></span> e <span class="text-loveRed"><%= @couple.partner_2 %></span>
+            Momentos de <span class="text-loveRed"><%= @couple.partner_1_first_name %></span> e <span class="text-loveRed"><%= @couple.partner_2_first_name %></span>
           </h1>
           <%= link_to "Adicionar Evento", new_couple_event_path(@couple.slug),
                   class: "bg-loveRed text-white px-6 py-3 rounded-md font-semibold hover:bg-red-600 shadow transition-transform transform hover:scale-105" %>

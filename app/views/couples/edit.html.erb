@@ -1,16 +1,9 @@
 <div class="min-h-screen bg-loveBlack text-white flex items-center justify-center">
   <div class="bg-gradient-to-br from-loveRed via-red-600 to-red-800 p-8 rounded-2xl shadow-2xl w-full max-w-lg">
-    <h2 class="text-4xl font-extrabold mb-6 text-center text-white">Editar Dados do Casal (TESTANDO)</h2>
+    <h2 class="text-4xl font-extrabold mb-6 text-center text-loveBlack">Editar Dados do Casal</h2>
 
     <%= form_with model: @couple, url: couple_path(@couple), method: :patch, local: true, class: "space-y-6" do |f| %>
     <%= render "devise/shared/error_messages", resource: @couple %>
-
-      <!-- Nome do Casal -->
-      <div>
-        <%= f.label :name, "Nome do Casal", class: "block text-sm font-semibold text-white mb-1" %>
-        <%= f.text_field :name, 
-              class: "mt-1 w-full rounded-lg border-gray-300 shadow-md focus:ring-loveRed focus:border-loveRed text-black px-4 py-2" %>
-      </div>
 
       <!-- Nome do Parceiro 1 -->
       <div>
