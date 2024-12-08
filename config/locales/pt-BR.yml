@@ -41,12 +41,16 @@ pt-BR:
       signed_in: "Login realizado com sucesso."
       signed_out: "Logout realizado com sucesso."
       already_signed_out: "Você já se desconectou."
-      user:
-        signed_in: "Bem-vindo de volta!"
+      signed_in: "Bem-vindo de volta!"
+      
     registrations:
       signed_up: "Cadastro realizado com sucesso."
       updated: "Sua conta foi atualizada com sucesso."
       destroyed: "Sua conta foi deletada com sucesso."
+    passwords:
+      send_instructions: "Você receberá um e-mail com instruções sobre como redefinir sua senha em alguns minutos."
+      no_token: "Token inválido ou expirado. Por favor, solicite uma nova redefinição de senha."
+      updated: "Sua senha foi alterada com sucesso."
     failure:
       unauthenticated: "Você precisa estar autenticado para acessar esta página."
       unconfirmed: "Você precisa confirmar sua conta antes de acessar."

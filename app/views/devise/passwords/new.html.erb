@@ -1,16 +1,30 @@
-<h2>Forgot your password?</h2>
+<div class="min-h-screen bg-loveBlack text-white flex items-center justify-center">
+  <div class="bg-loveRed p-8 rounded-lg shadow-xl w-full max-w-lg">
+    <h2 class="text-3xl font-bold text-center mb-6">Redefinir Senha</h2>
+    <p class="text-gray-100 text-center mb-6">
+      Insira seu e-mail abaixo para receber instruções sobre como redefinir sua senha.
+    </p>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+    <%= form_with(model: resource, as: resource_name, url: password_path(resource_name), local: true, class: "space-y-6") do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      <!-- Campo para o E-mail -->
+      <div>
+        <%= f.label :email, "E-mail", class: "block text-sm font-medium" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", 
+              class: "mt-1 w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:ring-loveRed focus:border-loveRed text-black" %>
+      </div>
+
+      <!-- Botão de Enviar -->
+      <div class="text-center">
+        <%= f.submit "Enviar Instruções", 
+              class: "w-full bg-loveBlack text-loveRed px-6 py-3 rounded-md font-semibold hover:bg-gray-800 cursor-pointer transition-transform transform hover:scale-105" %>
+      </div>
+    <% end %>
+
+    <!-- Link para voltar ao login -->
+    <div class="text-center mt-6">
+      <%= link_to "Voltar para o Login", new_session_path(resource_name), class: "text-gray-200 hover:text-white underline" %>
+    </div>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
