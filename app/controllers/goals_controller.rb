@@ -48,7 +48,7 @@ class GoalsController < ApplicationController
       @goal = Goal.find(params[:id])
       image = @goal.images.find(params[:image_id])
       image.purge
-      redirect_to edit_couple_goal_path(@couple.slug, @goal), notice: "Imagem removida com sucesso."
+      redirect_to edit_couple_goal_path(@couple.slug, @goal), notice: 'Imagem removida com sucesso.'
     end
 
     private
@@ -56,6 +56,7 @@ class GoalsController < ApplicationController
     def set_couple
       @couple = Couple.find_by(slug: params[:couple_slug])
       return unless @couple.nil? || @couple.user != current_user
+
       redirect_to root_path, alert: 'Acesso não autorizado.'
     end
 

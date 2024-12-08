@@ -25,28 +25,28 @@
 
   <body class="bg-loveBlack text-white min-h-screen">
     <!-- Navbar -->
-    <nav class="bg-loveRed text-white p-4 shadow-md">
+    <nav class="bg-loveRed text-white p-4 shadow-lg">
       <div class="container mx-auto flex justify-between items-center">
         <!-- Logo ou Nome da Plataforma -->
         <div>
-          <%= link_to root_path, class: "text-4xl font-extrabold text-white transition-colors duration-300 flex items-center gap-2" do %>
-            <i class="fas fa-heartbeat text-white animate-pulse hover:text-loveBlack"></i>
-            <span class="text-white hover:text-loveBlack">AmorLog</span>
+          <%= link_to root_path, class: "text-4xl font-extrabold text-white transition-all duration-300 flex items-center gap-2" do %>
+            <i class="fas fa-heartbeat text-black bg-white p-2 rounded-full hover:text-loveBlack transition-transform transform hover:scale-110"></i>
+            <span class="hover:text-loveBlack transition-all">AmorLog</span>
           <% end %>
         </div>
 
         <!-- Links de Navegação -->
         <div class="space-x-4">
-          <%= link_to "Início", root_path, class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
+          <%= link_to "Início", root_path, class: "bg-loveBlack text-loveRed px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-gray-900 hover:text-white transition-all transform hover:scale-105" %>
           <% if user_signed_in? %>
-            <%= link_to "Timeline", couple_timeline_path(current_user.couple.slug), class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
-            <%= link_to "Nossos Eventos", couple_events_path(current_user.couple.slug), class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
-            <%= link_to "Nossas Metas", couple_goals_path(current_user.couple.slug), class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
-            <%= link_to "Perfil", edit_couple_path(current_user.couple.slug), class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
-            <%= link_to "Sair", destroy_user_session_path, data: { "turbo-method": :delete }, class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
+            <%= link_to "Timeline", couple_timeline_path(current_user.couple.slug), class: "bg-loveBlack text-loveRed px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-gray-900 hover:text-white transition-all transform hover:scale-105" %>
+            <%= link_to "Nossos Eventos", couple_events_path(current_user.couple.slug), class: "bg-loveBlack text-loveRed px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-gray-900 hover:text-white transition-all transform hover:scale-105" %>
+            <%= link_to "Nossas Metas", couple_goals_path(current_user.couple.slug), class: "bg-loveBlack text-loveRed px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-gray-900 hover:text-white transition-all transform hover:scale-105" %>
+            <%= link_to "Perfil", edit_couple_path(current_user.couple.slug), class: "bg-loveBlack text-loveRed px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-gray-900 hover:text-white transition-all transform hover:scale-105" %>
+            <%= link_to "Sair", destroy_user_session_path, data: { "turbo-method": :delete }, class: "bg-loveBlack text-loveRed px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-gray-900 hover:text-white transition-all transform hover:scale-105" %>
           <% else %>
-            <%= link_to "Entrar", new_user_session_path, class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
-            <%= link_to "Registrar", new_user_registration_path, class: "bg-loveBlack text-loveRed px-4 py-2 rounded-md font-semibold hover:bg-gray-800" %>
+            <%= link_to "Entrar", new_user_session_path, class: "bg-loveBlack text-loveRed px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-gray-900 hover:text-white transition-all transform hover:scale-105" %>
+            <%= link_to "Registrar", new_user_registration_path, class: "bg-loveBlack text-loveRed px-4 py-2 rounded-lg font-semibold shadow-md hover:bg-gray-900 hover:text-white transition-all transform hover:scale-105" %>
           <% end %>
         </div>
       </div>

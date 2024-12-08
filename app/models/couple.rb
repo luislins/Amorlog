@@ -7,7 +7,7 @@ class Couple < ApplicationRecord
 
   before_validation :generate_slug
 
-  #override id -> slug
+  # override id -> slug
   def to_param
     slug
   end
@@ -24,6 +24,7 @@ class Couple < ApplicationRecord
 
   def generate_slug
     return unless partner_1.present? && partner_2.present?
+
     self.slug = "#{partner_1.split.first}-e-#{partner_2.split.first}".parameterize
   end
 end
