@@ -60,7 +60,7 @@
 
                 <% if goal.numeric? %>
                   <button 
-                    data-action="click->goal-modal#open" 
+                    data-action="click->goal-modal#open"
                     data-goal-id="<%= goal.id %>" 
                     data-base-url="<%= couple_goal_path(@couple.slug, ":id") %>" 
                     data-current-value="<%= goal.current_value %>" 

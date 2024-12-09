@@ -8,45 +8,42 @@
   <p class="text-lg mb-8 text-gray-300 text-center">Que tal organizar mais um momento especial juntos?</p>
    MENSAGEM DE ERRO NOS FORMS GLOBAL
   <!-- Contador de Tempo Dinâmico -->
-<% next_event = current_user.couple.events.order(date: :asc).where("date > ?", Date.today).first %>
-<div class="mb-8 gap-6 flex justify-center flex-wrap">
-  <% if next_event %>
-    <div id="countdown" class="bg-loveRed text-white px-8 py-6 rounded-lg font-semibold shadow-xl flex items-center gap-4 transition-all transform hover:scale-105 space-x-4">
-      <div class="flex flex-col items-center justify-center">
-        <i class="fas fa-calendar-check text-4xl mb-4"></i> <!-- Ícone para próximo evento -->
-        <h2 class="text-2xl font-bold mb-2">Próximo Evento: <%= next_event.title %></h2>
-        <p class="text-lg mt-2 mb-4">Faltam:</p>
-      </div>
-      
-      <!-- Exibição do Contador -->
-      <div class="flex space-x-4">
-        <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg">
-          <span class="text-4xl font-bold text-loveRed" id="days">00</span>
-          <span class="text-sm text-gray-400">Dias</span>
-        </div>
-
-        <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg">
-          <span class="text-4xl font-bold text-loveRed" id="hours">00</span>
-          <span class="text-sm text-gray-400">Horas</span>
-        </div>
-
-        <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg">
-          <span class="text-4xl font-bold text-loveRed" id="minutes">00</span>
-          <span class="text-sm text-gray-400">Minutos</span>
-        </div>
-
-        <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg">
-          <span class="text-4xl font-bold text-loveRed" id="seconds">00</span>
-          <span class="text-sm text-gray-400">Segundos</span>
+  <% next_event = current_user.couple.events.order(date: :asc).where("date > ?", Date.today).first %>
+  <div class="mb-8 gap-6 flex justify-center flex-wrap">
+    <% if next_event %>
+      <div data-controller="countdown" data-countdown-target-date-value="<%= next_event&.date.to_json.delete_prefix('"').delete_suffix('"') %>">
+        <div id="countdown" class="bg-loveRed text-white px-8 py-6 rounded-lg font-semibold shadow-xl flex items-center gap-4 transition-all transform hover:scale-105 space-x-4">
+          <div class="flex flex-col items-center justify-center">
+            <i class="fas fa-calendar-check text-4xl mb-4"></i>
+            <h2 class="text-2xl font-bold mb-2">Próximo Evento: <%= next_event.title %></h2>
+            <p class="text-lg mt-2 mb-4">Faltam:</p>
+          </div>
+          <div class="flex space-x-4">
+            <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg">
+              <span class="text-4xl font-bold text-loveRed" data-countdown-target="days">00</span>
+              <span class="text-sm text-gray-400">Dias</span>
+            </div>
+            <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg">
+              <span class="text-4xl font-bold text-loveRed" data-countdown-target="hours">00</span>
+              <span class="text-sm text-gray-400">Horas</span>
+            </div>
+            <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg">
+              <span class="text-4xl font-bold text-loveRed" data-countdown-target="minutes">00</span>
+              <span class="text-sm text-gray-400">Minutos</span>
+            </div>
+            <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg">
+              <span class="text-4xl font-bold text-loveRed" data-countdown-target="seconds">00</span>
+              <span class="text-sm text-gray-400">Segundos</span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  <% else %>
-    <div class="bg-loveRed text-white px-6 py-3 rounded-md font-semibold shadow-md">
-      <p class="text-lg">Você não tem eventos futuros registrados.</p>
-    </div>
-  <% end %>
-</div>
+    <% else %>
+      <div class="bg-loveRed text-white px-6 py-3 rounded-md font-semibold shadow-md">
+        <p class="text-lg">Você não tem eventos futuros registrados.</p>
+      </div>
+    <% end %>
+  </div>
 
   <!-- Botões para Eventos e Metas -->
   <div class="mb-8 gap-6 flex justify-center flex-wrap">
@@ -138,59 +135,3 @@
     <% end %>
   </div>
 </div>
-
-<script>
-  if (typeof countdownInterval === 'undefined') {
-    var countdownInterval;
-  }
-
-  function updateCountdown() {
-    const targetDate = new Date("<%= next_event&.date.to_json.delete_prefix('"').delete_suffix('"') %>").getTime();
-    const now = new Date().getTime();
-    const timeRemaining = Math.abs(targetDate - now);
-
-    const totalSeconds = Math.floor(timeRemaining / 1000);
-    const days = Math.floor(totalSeconds / (60 * 60 * 24));
-    const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
-    const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
-    const seconds = Math.floor(totalSeconds % 60);
-
-    const daysElement = document.getElementById('days');
-    const hoursElement = document.getElementById('hours');
-    const minutesElement = document.getElementById('minutes');
-    const secondsElement = document.getElementById('seconds');
-
-    if (daysElement && hoursElement && minutesElement && secondsElement) {
-      daysElement.innerHTML = days;
-      hoursElement.innerHTML = hours;
-      minutesElement.innerHTML = minutes;
-      secondsElement.innerHTML = seconds;
-    } else {
-      clearInterval(countdownInterval);
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const countdownElement = document.getElementById('countdown');
-    if (countdownElement && typeof countdownInterval === 'undefined') {
-      countdownInterval = setInterval(updateCountdown, 1000);
-    }
-  });
-
-  window.addEventListener("beforeunload", () => {
-    clearInterval(countdownInterval);
-    countdownInterval = undefined;
-  });
-  
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const countdownElement = document.getElementById('countdown');
-    if (countdownElement) {
-      countdownInterval = setInterval(updateCountdown, 1000);
-    }
-  });
-
-  window.addEventListener("beforeunload", () => {
-    clearInterval(countdownInterval);
-  });
-</script>
