@@ -19,25 +19,41 @@
             <p class="text-lg mt-2 mb-4">Faltam:</p>
           </div>
           <div class="flex space-x-4">
+            <!-- Dias -->
             <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg">
-              <span class="text-4xl font-bold text-loveRed" data-countdown-target="days">00</span>
+              <div class="relative w-12 h-12 flex items-center justify-center">
+                <span class="absolute border-4 border-t-white border-gray-400 rounded-full w-10 h-10 animate-spin" data-countdown-target="days"></span>
+              </div>
               <span class="text-sm text-gray-400">Dias</span>
             </div>
+
+            <!-- Horas -->
             <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg">
-              <span class="text-4xl font-bold text-loveRed" data-countdown-target="hours">00</span>
+              <div class="relative w-12 h-12 flex items-center justify-center">
+                <span class="absolute border-4 border-t-white border-gray-400 rounded-full w-10 h-10 animate-spin" data-countdown-target="hours"></span>
+              </div>
               <span class="text-sm text-gray-400">Horas</span>
             </div>
+
+            <!-- Minutos -->
             <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg">
-              <span class="text-4xl font-bold text-loveRed" data-countdown-target="minutes">00</span>
+              <div class="relative w-12 h-12 flex items-center justify-center">
+                <span class="absolute border-4 border-t-white border-gray-400 rounded-full w-10 h-10 animate-spin" data-countdown-target="minutes"></span>
+              </div>
               <span class="text-sm text-gray-400">Minutos</span>
             </div>
+
+            <!-- Segundos -->
             <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg">
-              <span class="text-4xl font-bold text-loveRed" data-countdown-target="seconds">00</span>
+              <div class="relative w-12 h-12 flex items-center justify-center">
+                <span class="absolute border-4 border-t-white border-gray-400 rounded-full w-10 h-10 animate-spin" data-countdown-target="seconds"></span>
+              </div>
               <span class="text-sm text-gray-400">Segundos</span>
             </div>
           </div>
         </div>
       </div>
+
     <% else %>
       <div class="bg-loveRed text-white px-6 py-3 rounded-md font-semibold shadow-md">
         <p class="text-lg">Você não tem eventos futuros registrados.</p>
