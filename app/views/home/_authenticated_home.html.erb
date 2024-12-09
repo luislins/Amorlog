@@ -6,7 +6,7 @@
     e <span class="text-loveRed"><%= current_user.couple.partner_2_first_name %></span>!
   </h1>
   <p class="text-lg mb-8 text-gray-300 text-center">Que tal organizar mais um momento especial juntos?</p>
-   MENSAGEM DE ERRO NOS FORMS GLOBAL
+
   <!-- Contador de Tempo Dinâmico -->
   <% next_event = current_user.couple.events.order(date: :asc).where("date > ?", Date.today).first %>
   <div class="mb-8 gap-6 flex justify-center flex-wrap">
