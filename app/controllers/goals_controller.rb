@@ -1,4 +1,6 @@
 class GoalsController < ApplicationController
+    include ActionView::RecordIdentifier
+
     before_action :set_couple
     before_action :set_goals, only: %i[index update]
     before_action :set_goal, only: %i[show edit update destroy mark_as_achieved]
@@ -33,7 +35,12 @@ class GoalsController < ApplicationController
 
     def destroy
       @goal.destroy
-      redirect_to couple_goals_path(@couple.slug), notice: 'Meta removida com sucesso!'
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.remove(dom_id(@goal))
+        end
+        format.html { redirect_to couple_goals_path(@couple.slug), notice: 'Meta removida com sucesso!' }
+      end
     end
 
     def mark_as_achieved

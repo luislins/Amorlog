@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  include ActionView::RecordIdentifier
+
   before_action :authenticate_user!
   before_action :set_couple
   before_action :set_event, only: %i[edit update destroy]
@@ -21,6 +23,16 @@ class EventsController < ApplicationController
   end
 
   def edit; end
+
+  def destroy
+    @event.destroy
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.remove(dom_id(@event))
+      end
+      format.html { redirect_to couple_event_path(@couple.slug), notice: 'Evento removido com sucesso!' }
+    end
+  end
 
   private
 
