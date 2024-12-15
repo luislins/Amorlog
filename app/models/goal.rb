@@ -12,10 +12,8 @@ class Goal < ApplicationRecord
 
   # validates :image, content_type: ['image/png', 'image/jpg', 'image/jpeg'], size: { less_than: 5.megabytes, message: 'deve ter menos de 5MB' }
 
-  enum kind: {
-    numeric: 0,
-    boolean: 1
-  }
+
+  enum :kind, numeric: 0, boolean: 1
 
   def numeric?
     kind == 'numeric' && numeric_value.present? && current_value.present?

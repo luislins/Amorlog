@@ -1,6 +1,7 @@
 class GoalsController < ApplicationController
     include ActionView::RecordIdentifier
 
+    before_action :authenticate_user!
     before_action :set_couple
     before_action :set_goals, only: %i[index update]
     before_action :set_goal, only: %i[show edit update destroy mark_as_achieved]

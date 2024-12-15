@@ -59,6 +59,7 @@ pt-BR:
       not_found_in_database: "E-mail ou senha inválidos."
       timeout: "Sua sessão expirou, faça login novamente."
       inactive: "Sua conta ainda não foi ativada."
+      already_authenticated: "Você já está autenticado."
       user:
         invalid: "E-mail ou senha inválidos."
         not_found_in_database: "E-mail ou senha inválidos."

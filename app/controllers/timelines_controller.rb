@@ -1,8 +1,11 @@
 class TimelinesController < ApplicationController
-  def index
-    couple = Couple.find_by!(slug: params[:couple_slug])
+  before_action :authenticate_user!
+  before_action :set_couple
 
-    events = couple.events.map do |event|
+  def index
+    @couple = Couple.find_by!(slug: params[:couple_slug])
+
+    events = @couple.events.map do |event|
       {
         type: :event,
         title: event.title,
@@ -12,7 +15,7 @@ class TimelinesController < ApplicationController
       }
     end
 
-    goals = couple.goals.map do |goal|
+    goals = @couple.goals.map do |goal|
       {
         type: :goal,
         title: goal.title,
@@ -28,4 +31,16 @@ class TimelinesController < ApplicationController
 
     @timeline_items = (events + goals).sort_by { |item| item[:date] }
   end
+
+  private
+
+  def set_couple
+    @couple = Couple.find_by(slug: params[:couple_slug])
+
+    # Verifica se o casal pertence ao usuário autenticado
+    return unless @couple.nil? || @couple.user != current_user
+
+      redirect_to root_path, alert: 'Acesso não autorizado.'
+  end
+
 end
