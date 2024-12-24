@@ -14,7 +14,7 @@ module.exports = {
         serif: ['Playfair Display', 'serif'],
       },
       colors: {
-        loveRed: '#E63946', // Vermelho
+        loveRed: '#D7263D', // Vermelho
         loveBlack: '#1D1D1D', // Preto
       }
     },
