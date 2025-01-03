@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  total: 1
+  max_value: 1
+  marked_values: MyText
+
+two:
+  total: 1
+  max_value: 1
+  marked_values: MyText

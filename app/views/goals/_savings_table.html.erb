@@ -1,0 +1,57 @@
+<div data-controller="savings" 
+     data-savings-save-url-value="<%= couple_savings_table_path(@couple.slug) %>"
+     data-savings-couple-id-value="<%= @couple.id %>" 
+     data-savings-total-value="<%= @savings_table.total %>"
+     data-savings-max-value="<%= @savings_table.max_value %>"
+     class="bg-gray-800 p-8 rounded-lg shadow-lg">
+  <!-- Título -->
+  <h2 class="text-3xl font-bold text-loveRed mb-6 text-center">Meta de Juntar Dinheiro</h2>
+  <p class="text-gray-300 mb-8 text-center">
+    Complete os quadrados para atingir sua meta de <span class="font-semibold text-white"><%= @savings_table.total %></span> reais!
+  </p>
+
+  <!-- Configurações -->
+  <div class="flex flex-wrap justify-center gap-4 mb-8">
+    <div class="flex flex-col items-center">
+      <label for="savings-target" class="text-gray-300 mb-2">Valor Total:</label>
+      <input 
+        id="savings-target" 
+        type="number" 
+        min="1" 
+        value="<%= @savings_table.total %>" 
+        class="bg-gray-700 text-white p-2 rounded-lg w-40 focus:outline-none focus:ring-2 focus:ring-loveRed transition-all" 
+        placeholder="Ex: 1000"
+        data-savings-target="totalInput"
+      />
+    </div>
+    <div class="flex flex-col items-center">
+      <label for="max-value" class="text-gray-300 mb-2">Valor Máximo:</label>
+      <input 
+        id="max-value" 
+        type="number" 
+        min="1" 
+        value="<%= @savings_table.max_value %>" 
+        class="bg-gray-700 text-white p-2 rounded-lg w-40 focus:outline-none focus:ring-2 focus:ring-loveRed transition-all" 
+        placeholder="Ex: 100"
+        data-savings-target="maxInput"
+      />
+    </div>
+    <button 
+      class="bg-green-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-600 transition-transform transform hover:scale-105"
+      data-action="click->savings#generate">
+      Gerar Quadrados
+    </button>
+  </div>
+
+  <!-- Grid de Quadrados -->
+  <div id="savings-grid" data-savings-target="grid" class="grid grid-cols-10 gap-3 p-4 bg-gray-900 rounded-lg">
+    <!-- Os quadrados serão gerados dinamicamente -->
+  </div>
+
+  <!-- Total Atual -->
+  <div class="mt-8 text-center">
+    <p class="text-gray-300 text-lg">
+      Você já juntou: <span id="savings-total" data-savings-target="currentTotal" class="text-loveRed font-bold text-2xl">0</span> reais
+    </p>
+  </div>
+</div>

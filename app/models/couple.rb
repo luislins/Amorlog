@@ -1,5 +1,7 @@
 class Couple < ApplicationRecord
   belongs_to :user
+  
+  has_one :savings_table, dependent: :destroy
   has_many :events, dependent: :destroy
   has_many :goals, dependent: :destroy
 

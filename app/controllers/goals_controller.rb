@@ -9,6 +9,11 @@ class GoalsController < ApplicationController
     def index
       @pending_goals = @goals.where(achieved: false).order(due_date: :asc)
       @completed_goals = @goals.where(achieved: true).order(due_date: :asc)
+
+      @savings_table = SavingsTable.find_or_create_by(couple: @couple) do |table|
+        table.total = 1000  # Valor total padrão
+        table.max_value = 100  # Valor máximo por quadrado padrão
+      end
     end
 
     def new
@@ -57,6 +62,15 @@ class GoalsController < ApplicationController
       image = @goal.images.find(params[:image_id])
       image.purge
       redirect_to edit_couple_goal_path(@couple.slug, @goal), notice: 'Imagem removida com sucesso.'
+    end
+
+    def update_marked_squares
+      @goal = Goal.find(params[:id])
+      if @goal.update(marked_squares: params[:marked_squares])
+        render json: { status: "success", marked_squares: @goal.marked_squares }
+      else
+        render json: { status: "error", errors: @goal.errors.full_messages }, status: :unprocessable_entity
+      end
     end
 
     private

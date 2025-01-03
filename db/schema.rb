@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_08_023745) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_03_015543) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -74,6 +74,16 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_08_023745) do
     t.index ["couple_id"], name: "index_goals_on_couple_id"
   end
 
+  create_table "savings_tables", force: :cascade do |t|
+    t.integer "total", null: false
+    t.integer "max_value", null: false
+    t.json "marked_values", default: []
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "couple_id", null: false
+    t.index ["couple_id"], name: "index_savings_tables_on_couple_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -91,4 +101,5 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_08_023745) do
   add_foreign_key "couples", "users"
   add_foreign_key "events", "couples"
   add_foreign_key "goals", "couples"
+  add_foreign_key "savings_tables", "couples"
 end

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :couples, param: :slug do
     get 'timeline', to: 'timelines#index', as: 'timeline'
+    resource :savings_table, only: [:show, :update]
     resources :events
     resources :goals do
       member do
