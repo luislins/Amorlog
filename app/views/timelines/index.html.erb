@@ -11,15 +11,27 @@
             <div class="relative bg-gradient-to-tr from-gray-800 via-gray-700 to-gray-900 rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-300">
               <!-- Imagens para metas -->
               <% if item[:type] == :goal && item[:images]&.any? %>
-                <div class="grid grid-cols-2 gap-2 mb-4 p-2">
-                  <% item[:images].each do |image| %>
-                    <div class="h-32 w-full overflow-hidden rounded-lg">
-                      <img src="<%= url_for(image) %>" 
+                <% if item[:images].size == 1 %>
+                  <!-- Layout para uma única imagem -->
+                  <div class="p-2 mb-4">
+                    <div class="h-64 w-full overflow-hidden rounded-lg">
+                      <img src="<%= url_for(item[:images].first) %>" 
                            alt="Imagem da Meta" 
                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
                     </div>
-                  <% end %>
-                </div>
+                  </div>
+                <% else %>
+                  <!-- Layout para múltiplas imagens -->
+                  <div class="grid grid-cols-2 gap-2 mb-4 p-2">
+                    <% item[:images].each do |image| %>
+                      <div class="h-32 w-full overflow-hidden rounded-lg">
+                        <img src="<%= url_for(image) %>" 
+                             alt="Imagem da Meta" 
+                             class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
               <% end %>
 
               <div class="p-6">
@@ -65,15 +77,27 @@
             <div class="relative bg-gradient-to-tr from-gray-800 via-gray-700 to-gray-900 rounded-2xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-300">
               <!-- Imagens para metas -->
               <% if item[:type] == :goal && item[:images]&.any? %>
-                <div class="grid grid-cols-2 gap-2 mb-4 p-2">
-                  <% item[:images].each do |image| %>
-                    <div class="h-32 w-full overflow-hidden rounded-lg">
-                      <img src="<%= url_for(image) %>" 
+                <% if item[:images].size == 1 %>
+                  <!-- Layout para uma única imagem -->
+                  <div class="p-2 mb-4">
+                    <div class="h-64 w-full overflow-hidden rounded-lg">
+                      <img src="<%= url_for(item[:images].first) %>" 
                            alt="Imagem da Meta" 
                            class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
                     </div>
-                  <% end %>
-                </div>
+                  </div>
+                <% else %>
+                  <!-- Layout para múltiplas imagens -->
+                  <div class="grid grid-cols-2 gap-2 mb-4 p-2">
+                    <% item[:images].each do |image| %>
+                      <div class="h-32 w-full overflow-hidden rounded-lg">
+                        <img src="<%= url_for(image) %>" 
+                             alt="Imagem da Meta" 
+                             class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
               <% end %>
 
               <div class="p-6">

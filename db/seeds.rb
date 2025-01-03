@@ -47,7 +47,7 @@ end
         title: "Meta #{i + 1}",
         description: "Descrição para a meta #{i + 1}",
         due_date: Date.today + i * 30,
-        achieved: kind == 1 ? [true, false].sample : nil,
+        achieved: kind == 1 ? [true, false].sample : false,
         kind: kind,
         numeric_value: numeric_value,
         current_value: current_value
