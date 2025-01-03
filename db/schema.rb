@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_03_020259) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_03_203918) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -74,14 +74,22 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_03_020259) do
     t.index ["couple_id"], name: "index_goals_on_couple_id"
   end
 
+  create_table "savings_table_squares", force: :cascade do |t|
+    t.integer "value"
+    t.boolean "checked"
+    t.integer "savings_table_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["savings_table_id"], name: "index_savings_table_squares_on_savings_table_id"
+  end
+
   create_table "savings_tables", force: :cascade do |t|
-    t.integer "total", null: false
+    t.integer "current_value", null: false
     t.integer "max_value", null: false
-    t.json "marked_values", default: []
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "couple_id", null: false
-    t.json "squares", default: []
+    t.integer "max_value_per_square"
     t.index ["couple_id"], name: "index_savings_tables_on_couple_id"
   end
 
@@ -102,5 +110,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_03_020259) do
   add_foreign_key "couples", "users"
   add_foreign_key "events", "couples"
   add_foreign_key "goals", "couples"
+  add_foreign_key "savings_table_squares", "savings_tables"
   add_foreign_key "savings_tables", "couples"
 end

@@ -1,0 +1,2 @@
+module SavingsTableSquaresHelper
+end

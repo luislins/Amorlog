@@ -1,15 +1,31 @@
 class SavingsTablesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_couple, only: %i[update show]
+
+
   def show
-    @savings_table = SavingsTable.find_by(couple: params[:couple_slug])
-    render json: { status: "success", savings_table: @savings_table }
+    @savings_table = @couple.savings_table
   end
 
   def update
-    @savings_table = SavingsTable.find_by(couple: params[:couple_slug])
-    if @savings_table.update(squares: params[:squares])
-      render json: { status: "success", savings_table: @savings_table }
+    @savings_table = @couple.savings_table
+    if @savings_table.update(savings_table_params)
+      redirect_to couple_savings_table_path(@couple), notice: "Tabela de economias atualizada com sucesso."
     else
-      render json: { status: "error", errors: @savings_table.errors.full_messages }, status: :unprocessable_entity
+      render :show, status: :unprocessable_entity
     end
+  end
+  
+  private
+
+  def set_couple
+    @couple = Couple.find_by(slug: params[:couple_slug])
+    return unless @couple.nil? || @couple.user != current_user
+
+    redirect_to root_path, alert: 'Acesso não autorizado.'
+  end
+  
+  def savings_table_params
+    params.require(:savings_table).permit(:max_value, :max_value_per_square)
   end
 end

@@ -4,16 +4,12 @@ class GoalsController < ApplicationController
     before_action :authenticate_user!
     before_action :set_couple
     before_action :set_goals, only: %i[index update]
+    before_action :set_savings_table, only: :index
     before_action :set_goal, only: %i[show edit update destroy mark_as_achieved]
 
     def index
       @pending_goals = @goals.where(achieved: false).order(due_date: :asc)
       @completed_goals = @goals.where(achieved: true).order(due_date: :asc)
-
-      @savings_table = SavingsTable.find_or_create_by(couple: @couple) do |table|
-        table.total = 1000  # Valor total padrão
-        table.max_value = 100  # Valor máximo por quadrado padrão
-      end
     end
 
     def new
@@ -84,6 +80,14 @@ class GoalsController < ApplicationController
 
     def set_goal
       @goal = @couple.goals.find(params[:id])
+    end
+
+    def set_savings_table
+      @savings_table = SavingsTable.find_or_create_by(couple: @couple) do |table|
+        table.current_value = 0  # Valor total padrão
+        table.max_value = 1000  # Valor total padrão
+        table.max_value_per_square = 100  # Valor máximo por quadrado padrão
+      end
     end
 
     def set_goals

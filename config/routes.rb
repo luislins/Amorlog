@@ -16,4 +16,10 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resources :savings_table_squares, only: [] do
+    member do
+      patch :toggle_checked
+    end
+  end
 end

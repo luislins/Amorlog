@@ -1,63 +1,56 @@
-<div data-controller="savings" 
-     data-savings-save-url-value="<%= couple_savings_table_path(@couple.slug) %>"
-     class="bg-gray-800 p-8 rounded-xl shadow-2xl transform hover:shadow-xl transition-all">
-  <!-- Título -->
+<div class="bg-gray-800 p-8 rounded-xl shadow-2xl transform hover:shadow-xl transition-all">
   <h2 class="text-4xl font-extrabold text-loveRed mb-6 text-center tracking-wide drop-shadow-lg">
     Meta de Juntar Dinheiro
   </h2>
   <p class="text-gray-300 mb-8 text-center text-lg">
-    Complete os quadrados para atingir sua meta de <span class="font-semibold text-white"><%= @savings_table.total %></span> reais!
+    Complete os quadrados para atingir sua meta de <span class="font-semibold text-white"><%= @savings_table.max_value %></span> reais!
   </p>
 
-  <!-- Configurações -->
-  <div class="flex flex-wrap justify-center gap-6 mb-10">
+  <%= form_with model: [@couple, @savings_table], url: couple_savings_table_path(@couple), method: :patch, local: true, class: "flex flex-wrap justify-center gap-6 mb-10" do |f| %>
     <!-- Valor Total -->
     <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg shadow-lg w-48">
-      <label for="savings-target" class="text-gray-300 mb-2 font-semibold">Valor Total:</label>
-      <input 
-        id="savings-target" 
-        type="number" 
-        min="1" 
-        value="<%= @savings_table.total %>" 
-        class="bg-gray-800 text-white p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-loveRed transition-all text-center font-bold" 
-        placeholder="Ex: 1000"
-        data-savings-target="totalInput"
-      />
+        <%= f.label :max_value, "Valor Total:", class: "text-gray-300 mb-2 font-semibold" %>
+        <%= f.number_field :max_value, 
+            min: 1, 
+            class: "bg-gray-800 text-white p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-loveRed transition-all text-center font-bold", 
+            placeholder: "Ex: 1000" %>
     </div>
 
-    <!-- Valor Máximo -->
+    <!-- Valor Máximo por Quadrado -->
     <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg shadow-lg w-48">
-      <label for="max-value" class="text-gray-300 mb-2 font-semibold">Valor Máximo:</label>
-      <input 
-        id="max-value" 
-        type="number" 
-        min="1" 
-        value="<%= @savings_table.max_value %>" 
-        class="bg-gray-800 text-white p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-loveRed transition-all text-center font-bold" 
-        placeholder="Ex: 100"
-        data-savings-target="maxInput"
-      />
+        <%= f.label :max_value_per_square, "Valor Máximo:", class: "text-gray-300 mb-2 font-semibold" %>
+        <%= f.number_field :max_value_per_square, 
+            min: 1, 
+            class: "bg-gray-800 text-white p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-loveRed transition-all text-center font-bold", 
+            placeholder: "Ex: 100" %>
     </div>
 
-    <!-- Botão Gerar -->
-    <button 
-      class="bg-green-500 text-white px-8 py-3 rounded-lg font-semibold shadow-lg hover:bg-green-600 transition-transform transform hover:scale-110"
-      data-action="click->savings#generate">
-      Gerar Quadrados
-    </button>
-  </div>
+    <!-- Botão Salvar -->
+    <div class="flex justify-center">
+        <%= f.submit "Salvar Alterações", class: "bg-green-500 text-white px-8 py-3 rounded-lg font-semibold shadow-lg hover:bg-green-600 transition-transform transform hover:scale-110" %>
+    </div>
+  <% end %>
 
   <!-- Grid de Quadrados -->
-  <div id="savings-grid" 
-       data-savings-target="grid" 
-       class="grid grid-cols-10 gap-3 p-4 bg-gray-900 rounded-lg shadow-inner overflow-hidden">
-    <!-- Os quadrados serão gerados dinamicamente -->
-  </div>
+  <div data-controller="savings-table-squares" >
+    <div id="savings-grid" class="grid grid-cols-10 gap-3 p-4 bg-gray-900 rounded-lg shadow-inner overflow-hidden">
+        <% @savings_table.savings_table_squares.each do |square| %>
+            <div 
+            class="w-12 h-12 flex items-center justify-center rounded-md font-bold cursor-pointer transition-all 
+                    <%= square.checked ? 'bg-loveRed text-white' : 'bg-gray-700 text-white' %>" 
+            data-action="click->savings-table-squares#toggleChecked" 
+            data-id="<%= square.id %>" 
+            data-checked="<%= square.checked %>">
+            <%= square.value %>
+            </div>
+        <% end %>
+    </div>
 
-  <!-- Total Atual -->
-  <div class="mt-10 text-center">
-    <p class="text-gray-300 text-lg tracking-wide">
-      Você já juntou: <span id="savings-total" data-savings-target="currentTotal" class="text-loveRed font-extrabold text-3xl">0</span> reais
-    </p>
-  </div>
+    <!-- Total Atual -->
+    <div class="mt-10 text-center">
+        <p class="text-gray-300 text-lg tracking-wide">
+        Você já juntou: <span id="savings-total" data-savings-table-squares-target="total" class="text-loveRed font-extrabold text-3xl"><%= @savings_table.savings_table_squares.where(checked: true).sum(:value) %></span> reais
+        </p>
+    </div>
+   </div>
 </div>
