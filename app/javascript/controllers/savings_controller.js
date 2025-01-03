@@ -3,11 +3,11 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = ["grid", "totalInput", "maxInput", "currentTotal"];
-  static values = { goalId: Number, saveUrl: String };
+  static values = { saveUrl: String };
 
   connect() {
     this.total = 0;
-    this.markedSquares = new Set(); // Armazena os valores marcados
+    this.squares = []; // Armazena os quadrados e seus estados
   }
 
   generate() {
@@ -21,63 +21,58 @@ export default class extends Controller {
 
     this.gridTarget.innerHTML = ""; // Limpa o grid anterior
     this.total = 0;
+    this.squares = [];
 
-    const squares = this.generateSquares(totalValue, maxValue);
-
-    squares.forEach((value) => {
-      const square = document.createElement("div");
-      square.className =
-        "w-12 h-12 flex items-center justify-center bg-gray-700 rounded-md text-white font-bold cursor-pointer hover:bg-loveRed transition-all";
-      square.innerText = value;
-      square.dataset.savingsValue = value;
-      square.dataset.savingsStatus = "unmarked";
-      square.addEventListener("click", this.toggle.bind(this));
-
-      this.gridTarget.appendChild(square);
-    });
-
-    this.saveMarkedSquares(); // Salva os valores gerados inicialmente
-  }
-
-  generateSquares(totalValue, maxValue) {
-    const squares = [];
     let remaining = totalValue;
 
     while (remaining > 0) {
       const value = Math.min(Math.ceil(Math.random() * maxValue), remaining);
-      squares.push(value);
+      this.squares.push({ value, marked: false });
       remaining -= value;
     }
 
-    return squares;
+    this.renderSquares();
+    this.saveSquares(); // Salva os quadrados gerados
+  }
+
+  renderSquares() {
+    this.gridTarget.innerHTML = ""; // Limpa o grid
+    this.squares.forEach((square, index) => {
+      const div = document.createElement("div");
+      div.className =
+        "w-12 h-12 flex items-center justify-center bg-gray-700 rounded-md text-white font-bold cursor-pointer hover:bg-loveRed transition-all";
+      div.innerText = square.value;
+      div.dataset.index = index;
+      div.dataset.marked = square.marked;
+
+      if (square.marked) {
+        div.classList.add("bg-loveRed");
+      }
+
+      div.addEventListener("click", this.toggle.bind(this));
+      this.gridTarget.appendChild(div);
+    });
   }
 
   toggle(event) {
-    const square = event.currentTarget;
-    const value = parseInt(square.dataset.savingsValue, 10);
-    const status = square.dataset.savingsStatus;
+    const index = event.currentTarget.dataset.index;
+    const square = this.squares[index];
+    square.marked = !square.marked;
 
-    if (status === "unmarked") {
-      square.dataset.savingsStatus = "marked";
-      square.classList.add("bg-loveRed");
-      this.total += value;
-      this.markedSquares.add(value);
-    } else {
-      square.dataset.savingsStatus = "unmarked";
-      square.classList.remove("bg-loveRed");
-      this.total -= value;
-      this.markedSquares.delete(value);
-    }
+    this.total = this.squares
+      .filter((sq) => sq.marked)
+      .reduce((sum, sq) => sum + sq.value, 0);
 
+    this.renderSquares();
     this.updateTotal();
-    this.saveMarkedSquares(); // Salva os valores atualizados
+    this.saveSquares(); // Atualiza os quadrados no servidor
   }
 
   updateTotal() {
     this.currentTotalTarget.innerText = this.total;
   }
 
-  async saveMarkedSquares() {
+  async saveSquares() {
     try {
       const response = await fetch(this.saveUrlValue, {
         method: "PATCH",
@@ -86,13 +81,12 @@ export default class extends Controller {
           "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
         },
         body: JSON.stringify({
-          marked_values: Array.from(this.markedSquares),
+          squares: this.squares,
         }),
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Erro ao salvar os dados:", errorData);
+        console.error("Erro ao salvar os dados:", await response.json());
       }
     } catch (error) {
       console.error("Erro ao salvar os dados:", error);
