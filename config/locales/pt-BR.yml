@@ -11,22 +11,42 @@ pt-BR:
       not_saved: "%{resource} não pôde ser salvo devido a %{count} erro(s):"
       too_short: "É muito curto (mínimo de %{count} caracteres)"
       taken: "Já está em uso"
+      not_a_number: "não é um número"
     attributes:
       email:
         taken: "Este e-mail já está em uso"
       password:
         too_short: "A senha é muito curta (mínimo de %{count} caracteres)"
+      current_value:
+        not_a_number: "O valor atual deve ser um número"
+      numeric_value:
+        not_a_number: "O valor numérico deve ser um número"
+      achieved:
+        inclusion: "O valor deve ser verdadeiro ou falso"
 
   activerecord:
     attributes:
       goal:
         current_value: "Valor atual"
+        numeric_value: "Valor numérico"
+        due_date: "Data de vencimento"
+        title: "Título"
     models:
       user:
         one: "Usuário"
         other: "Usuários"
+      goal:
+        one: "Meta"
+        other: "Metas"
     errors:
       models:
+        goal:
+          attributes:
+            current_value:
+              not_a_number: "O valor atual deve ser um número válido"
+            numeric_value:
+              not_a_number: "O valor numérico deve ser um número válido"
+          not_saved: "A meta não pôde ser salva devido a erros."
         user:
           attributes:
             email:
