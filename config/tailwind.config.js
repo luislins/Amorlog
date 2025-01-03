@@ -10,8 +10,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['InterVariable','Montserrat', 'sans-serif'],
-        serif: ['Playfair Display', 'serif'],
+        romantic: ["Dancing Script", "cursive"],
+        elegant: ["Playfair Display", "serif"],
       },
       colors: {
         loveRed: '#D7263D', // Vermelho
