@@ -1,0 +1,11 @@
+<turbo-frame id="savings_total">
+    <div class="mt-10 text-center">
+        <p class="text-gray-300 text-lg tracking-wide">
+        Você já juntou: <span data-savings-table-squares-target="total" class="text-loveRed font-extrabold text-3xl">
+            <%= savings_table.savings_table_squares.where(checked: true).sum(:value) %>
+        </span> reais
+        </p>
+    </div>
+</turbo-frame>
+
+

@@ -9,48 +9,34 @@
   <%= form_with model: [@couple, @savings_table], url: couple_savings_table_path(@couple), method: :patch, local: true, class: "flex flex-wrap justify-center gap-6 mb-10" do |f| %>
     <!-- Valor Total -->
     <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg shadow-lg w-48">
-        <%= f.label :max_value, "Valor Total:", class: "text-gray-300 mb-2 font-semibold" %>
-        <%= f.number_field :max_value, 
-            min: 1, 
-            class: "bg-gray-800 text-white p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-loveRed transition-all text-center font-bold", 
-            placeholder: "Ex: 1000" %>
+      <%= f.label :max_value, "Valor Total:", class: "text-gray-300 mb-2 font-semibold" %>
+      <%= f.number_field :max_value,
+                         min: 1,
+                         class: "bg-gray-800 text-white p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-loveRed transition-all text-center font-bold",
+                         placeholder: "Ex: 1000" %>
     </div>
 
     <!-- Valor Máximo por Quadrado -->
     <div class="flex flex-col items-center bg-gray-700 p-4 rounded-lg shadow-lg w-48">
-        <%= f.label :max_value_per_square, "Valor Máximo:", class: "text-gray-300 mb-2 font-semibold" %>
-        <%= f.number_field :max_value_per_square, 
-            min: 1, 
-            class: "bg-gray-800 text-white p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-loveRed transition-all text-center font-bold", 
-            placeholder: "Ex: 100" %>
+      <%= f.label :max_value_per_square, "Valor Máximo:", class: "text-gray-300 mb-2 font-semibold" %>
+      <%= f.number_field :max_value_per_square,
+                         min: 1,
+                         class: "bg-gray-800 text-white p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-loveRed transition-all text-center font-bold",
+                         placeholder: "Ex: 100" %>
     </div>
 
     <!-- Botão Salvar -->
     <div class="flex justify-center">
-        <%= f.submit "Salvar Alterações", class: "bg-green-500 text-white px-8 py-3 rounded-lg font-semibold shadow-lg hover:bg-green-600 transition-transform transform hover:scale-110" %>
+      <%= f.submit "Salvar Alterações", class: "bg-green-500 text-white px-8 py-3 rounded-lg font-semibold shadow-lg hover:bg-green-600 transition-transform transform hover:scale-110" %>
     </div>
   <% end %>
-
-  <!-- Grid de Quadrados -->
-  <div data-controller="savings-table-squares" >
-    <div id="savings-grid" class="grid grid-cols-10 gap-3 p-4 bg-gray-900 rounded-lg shadow-inner overflow-hidden">
-        <% @savings_table.savings_table_squares.each do |square| %>
-            <div 
-            class="w-12 h-12 flex items-center justify-center rounded-md font-bold cursor-pointer transition-all 
-                    <%= square.checked ? 'bg-loveRed text-white' : 'bg-gray-700 text-white' %>" 
-            data-action="click->savings-table-squares#toggleChecked" 
-            data-id="<%= square.id %>" 
-            data-checked="<%= square.checked %>">
-            <%= square.value %>
-            </div>
-        <% end %>
-    </div>
+  
+  <div data-controller="savings-table-squares">
+    <!-- Grid de Quadrados -->
+    <%= render partial: "squares_grid", locals: { savings_table: @savings_table } %>
 
     <!-- Total Atual -->
-    <div class="mt-10 text-center">
-        <p class="text-gray-300 text-lg tracking-wide">
-        Você já juntou: <span id="savings-total" data-savings-table-squares-target="total" class="text-loveRed font-extrabold text-3xl"><%= @savings_table.savings_table_squares.where(checked: true).sum(:value) %></span> reais
-        </p>
-    </div>
-   </div>
+    <%= render partial: "savings_total", locals: { savings_table: @savings_table } %>
+  </div>
+
 </div>

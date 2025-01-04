@@ -1,0 +1,15 @@
+<turbo-frame id="squares_grid">
+    <div id="savings-grid" class="grid grid-cols-10 gap-3 p-4 bg-gray-900 rounded-lg shadow-inner overflow-hidden">
+        <% savings_table.savings_table_squares.each do |square| %>
+        <div 
+            class="w-12 h-12 flex items-center justify-center rounded-md font-bold cursor-pointer transition-all 
+            <%= square.checked ? 'bg-loveRed text-white' : 'bg-gray-700 text-white' %>" 
+            data-action="click->savings-table-squares#toggleChecked" 
+            data-id="<%= square.id %>" 
+            data-checked="<%= square.checked %>">
+            <%= square.value %>
+        </div>
+        <% end %>
+    </div>
+</turbo-frame>
+

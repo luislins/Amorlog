@@ -4,7 +4,6 @@ export default class extends Controller {
   static targets = ["square", "total"];
 
   connect() {
-    console.log("SavingsTableSquaresController connected!");
   }
 
   toggleChecked(event) {
@@ -25,7 +24,6 @@ export default class extends Controller {
           square.dataset.checked = data.checked;
           square.classList.toggle("bg-loveRed", data.checked);
           square.classList.toggle("bg-gray-700", !data.checked);
-
           // Atualizar o total no span
           if (this.hasTotalTarget) {
             this.totalTarget.textContent = data.new_total;

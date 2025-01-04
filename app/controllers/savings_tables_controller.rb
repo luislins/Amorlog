@@ -9,12 +9,33 @@ class SavingsTablesController < ApplicationController
 
   def update
     @savings_table = @couple.savings_table
+  
     if @savings_table.update(savings_table_params)
-      redirect_to couple_savings_table_path(@couple), notice: "Tabela de economias atualizada com sucesso."
+      respond_to do |format|
+        format.html do
+          redirect_to couple_savings_table_path(@couple),
+                      notice: "Tabela de economias atualizada com sucesso."
+        end
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.replace(
+              "squares_grid",
+              partial: "goals/squares_grid",
+              locals: { savings_table: @savings_table }
+            ),
+            turbo_stream.replace(
+              "savings_total",
+              partial: "goals/savings_total",
+              locals: { savings_table: @savings_table }
+            )
+          ]
+        end
+      end
     else
       render :show, status: :unprocessable_entity
     end
   end
+  
   
   private
 

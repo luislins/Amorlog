@@ -15,6 +15,7 @@ class SavingsTableSquaresController < ApplicationController
       respond_to do |format|
         format.json { render json: { success: true, checked: square.checked, new_total: total_checked } }
       end
+      
     end
 
     private
