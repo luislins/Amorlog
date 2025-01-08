@@ -76,9 +76,15 @@
           <div class="mt-4 grid grid-cols-2 gap-4" data-image-preview-target="previewContainer">
             <% if @goal.images.attached? %>
               <% @goal.images.each do |image| %>
-                <div class="relative">
+                <div class="relative" data-image-id="<%= image.id %>">
                   <%= image_tag(image, class: "rounded-lg shadow-md w-full h-40 object-cover") %>
-                  <%= link_to "Remover", rails_blob_path(image, only_path: true), method: :delete, data: { confirm: "Deseja remover esta imagem?" }, class: "absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded-full text-xs hover:bg-red-800 transition-all" %>
+                  <%= button_to destroy_image_couple_goal_path(@goal.couple, @goal, image_id: image.id), 
+              method: :delete, 
+              data: { confirm: 'Tem certeza que deseja remover esta imagem?' }, 
+              class: "absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded-full text-xs hover:bg-red-800 transition-all transform hover:scale-110 flex items-center gap-2" do %>
+  <i class="fas fa-trash-alt"></i> Remover
+<% end %>
+
                 </div>
               <% end %>
             <% end %>

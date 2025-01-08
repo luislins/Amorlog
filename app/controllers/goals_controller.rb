@@ -51,17 +51,23 @@ class GoalsController < ApplicationController
     end
   end
 
-  def remove_image
-    image = @goal.images.find(params[:image_id])
-    image.purge
-    redirect_to edit_couple_goal_path(@couple, @goal), notice: 'Imagem removida com sucesso.'
-  end
-
   def update_marked_squares
     if @goal.update(marked_squares: params[:marked_squares])
       render json: { status: "success", marked_squares: @goal.marked_squares }
     else
       render json: { status: "error", errors: @goal.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy_image
+    @couple = Couple.find_by(slug: params[:couple_slug]) # Se slug estiver sendo usado
+    @goal = @couple.goals.find(params[:id])
+    image = @goal.images.find(params[:image_id]) # Busca a imagem específica
+    image.purge # Remove a imagem específica
+  
+    respond_to do |format|
+      format.html { redirect_to edit_couple_goal_path(@couple, @goal), notice: "Imagem removida com sucesso." }
+      format.json { head :no_content }
     end
   end
 

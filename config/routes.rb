@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     resources :goals do
       member do
         patch :mark_as_achieved
-        delete :remove_image
+        delete :destroy_image
       end
     end
   end
