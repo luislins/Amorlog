@@ -8,7 +8,11 @@ Rails.application.routes.draw do
   resources :couples, param: :slug do
     get 'timeline', to: 'timelines#index', as: 'timeline'
     resource :savings_table, only: [:show, :update]
-    resources :events
+    resources :events do
+      member do
+      delete :destroy_image
+      end
+    end
     resources :goals do
       member do
         patch :mark_as_achieved

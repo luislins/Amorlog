@@ -60,7 +60,6 @@ class GoalsController < ApplicationController
   end
 
   def destroy_image
-    @couple = Couple.find_by(slug: params[:couple_slug])
     @goal = @couple.goals.find(params[:id])
     image = @goal.images.find(params[:image_id])
     image.purge

@@ -46,6 +46,34 @@
           <p class="text-sm text-gray-200 mt-2">Escolha o tipo que melhor descreve o evento.</p>
         </div>
 
+        <!-- Upload de Imagens -->
+        <div class="flex flex-col mb-6" data-controller="image-preview">
+          <%= form.label :images, "Adicionar Imagens (Opcional)", class: "block text-base font-semibold text-white mb-2" %>
+          <%= form.file_field :images, 
+                multiple: true, 
+                accept: "image/*", 
+                data: { action: "change->image-preview#preview", "image-preview-target" => "input" },
+                class: "w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-loveRed text-black" %>
+
+          <!-- Pré-visualizações -->
+          <div class="mt-4 grid grid-cols-2 gap-4" data-image-preview-target="previewContainer">
+            <% if @event.images.attached? %>
+              <% @event.images.each do |image| %>
+                <div class="relative" data-image-id="<%= image.id %>">
+                  <!-- Imagem -->
+                  <%= image_tag(image, class: "rounded-lg shadow-md w-full h-40 object-cover") %>
+                  <!-- Botão de Remover -->
+                  <%= link_to destroy_image_couple_event_path(@event.couple, @event, image_id: image.id), 
+                              data: { turbo_method: :delete, confirm: "Tem certeza que deseja remover esta imagem?" }, 
+                              class: "absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded-full text-xs hover:bg-red-800 transition-all transform hover:scale-110 flex items-center gap-2" do %>
+                    <i class="fas fa-trash-alt"></i> Remover
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+
         <!-- Botão de Salvar -->
         <div class="text-center">
           <%= form.submit @event.new_record? ? "Salvar Evento" : "Salvar Alterações", 

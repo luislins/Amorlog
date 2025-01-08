@@ -41,6 +41,17 @@ class EventsController < ApplicationController
     end
   end
 
+  def destroy_image
+    @goal = @couple.events.find(params[:id])
+    image = @goal.images.find(params[:image_id])
+    image.purge
+  
+    respond_to do |format|
+      format.html { redirect_to edit_couple_goal_path(@couple, @goal), notice: "Imagem removida com sucesso." }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   def set_event
@@ -48,6 +59,6 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:title, :description, :date, :event_type)
+    params.require(:event).permit(:title, :description, :date, :event_type, images: [])
   end
 end
