@@ -1,7 +1,8 @@
 class SavingsTableSquaresController < ApplicationController
+  before_action :set_couple
 
   def toggle_checked
-    square = @couple.savings_table
+    square = SavingsTableSquare.find(params[:id])
     savings_table = square.savings_table
 
     # Alterna o estado de "checked" do quadrado
