@@ -60,10 +60,10 @@ class GoalsController < ApplicationController
   end
 
   def destroy_image
-    @couple = Couple.find_by(slug: params[:couple_slug]) # Se slug estiver sendo usado
+    @couple = Couple.find_by(slug: params[:couple_slug])
     @goal = @couple.goals.find(params[:id])
-    image = @goal.images.find(params[:image_id]) # Busca a imagem específica
-    image.purge # Remove a imagem específica
+    image = @goal.images.find(params[:image_id])
+    image.purge
   
     respond_to do |format|
       format.html { redirect_to edit_couple_goal_path(@couple, @goal), notice: "Imagem removida com sucesso." }

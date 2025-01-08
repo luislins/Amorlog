@@ -5,7 +5,7 @@
       <div class="flex justify-between items-center mb-6">
         <div>
           <h1 class="text-4xl font-extrabold text-white tracking-wider">
-            <% text = goal.new_record? ? "Adicionar Nova Meta de" : "Editar Meta de" %>
+            <% text = @goal.new_record? ? "Adicionar Nova Meta de" : "Editar Meta de" %>
             <%= text %> 
             <span class="text-loveRed"><%= @couple.partner_1_first_name %></span> 
             e 
@@ -77,14 +77,14 @@
             <% if @goal.images.attached? %>
               <% @goal.images.each do |image| %>
                 <div class="relative" data-image-id="<%= image.id %>">
+                  <!-- Imagem -->
                   <%= image_tag(image, class: "rounded-lg shadow-md w-full h-40 object-cover") %>
-                  <%= button_to destroy_image_couple_goal_path(@goal.couple, @goal, image_id: image.id), 
-              method: :delete, 
-              data: { confirm: 'Tem certeza que deseja remover esta imagem?' }, 
-              class: "absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded-full text-xs hover:bg-red-800 transition-all transform hover:scale-110 flex items-center gap-2" do %>
-  <i class="fas fa-trash-alt"></i> Remover
-<% end %>
-
+                  <!-- Botão de Remover -->
+                  <%= link_to destroy_image_couple_goal_path(@goal.couple, @goal, image_id: image.id), 
+                              data: { turbo_method: :delete, confirm: "Tem certeza que deseja remover esta imagem?" }, 
+                              class: "absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded-full text-xs hover:bg-red-800 transition-all transform hover:scale-110 flex items-center gap-2" do %>
+                    <i class="fas fa-trash-alt"></i> Remover
+                  <% end %>
                 </div>
               <% end %>
             <% end %>
