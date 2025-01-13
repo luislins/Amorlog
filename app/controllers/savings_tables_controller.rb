@@ -28,12 +28,12 @@ class SavingsTablesController < ApplicationController
     render turbo_stream: [
       turbo_stream.replace(
         "squares_grid",
-        partial: "goals/squares_grid",
+        partial: "squares_grid",
         locals: { savings_table: @savings_table }
       ),
       turbo_stream.replace(
         "savings_total",
-        partial: "goals/savings_total",
+        partial: "savings_total",
         locals: { savings_table: @savings_table }
       )
     ]

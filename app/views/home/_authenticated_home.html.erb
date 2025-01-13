@@ -84,12 +84,14 @@
   <!-- Estatísticas do Casal -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl mb-12">
     <!-- Número de Eventos -->
+    <% total_events = current_user.couple.events.count %>
+    <% past_events_count = current_user.couple.events.where("date < ?", Date.today).count %>
     <div class="p-6 bg-gray-800 rounded-lg shadow-md">
       <h3 class="text-xl font-bold text-loveRed mb-2 flex items-center gap-2">
         <i class="fas fa-calendar-day"></i> Eventos Registrados
       </h3>
-      <p class="text-4xl font-bold text-white"><%= current_user.couple.events.count %></p>
-      <p class="text-gray-400 mt-2">Você já registrou <%= current_user.couple.events.count %> momentos incríveis juntos.</p>
+      <p class="text-4xl font-bold text-white"><%= total_events %></p>
+      <p class="text-gray-400 mt-2">Vocês têm <strong><%= total_events %></strong> eventos registrados, sendo <strong><%= past_events_count %></strong> já concluídos.</p>
     </div>
 
     <!-- Próximo Evento -->
@@ -105,14 +107,16 @@
       <% end %>
     </div>
 
-    <!-- Eventos Concluídos -->
-    <div class="p-6 bg-gray-800 rounded-lg shadow-md">
-      <h3 class="text-xl font-bold text-loveRed mb-2 flex items-center gap-2">
-        <i class="fas fa-check-circle"></i> Eventos Concluídos
+    <!-- Progresso Financeiro -->
+    <% savings_table = current_user.couple.savings_table %>
+    <div class="p-6 bg-gray-800 rounded-lg shadow-md content-center">
+      <h3 class="text-xl font-bold text-blue-400 mb-2 flex items-center gap-2">
+        <i class="fas fa-dollar-sign"></i> Progresso Financeiro
       </h3>
-      <% past_events_count = current_user.couple.events.where("date < ?", Date.today).count %>
-      <p class="text-4xl font-bold text-white"><%= past_events_count %></p>
-      <p class="text-gray-400 mt-2">Esses são os momentos especiais que já passaram, mas continuam em sua memória.</p>
+      <div class="relative w-full bg-gray-700 h-6 rounded-full mb-4">
+        <div class="absolute top-0 left-0 h-6 rounded-full bg-blue-500" style="width: <%= (savings_table.current_value.to_f / savings_table.max_value) * 100 %>%"></div>
+      </div>
+      <p class="text-gray-400">Vocês economizaram <strong><%= number_to_currency(savings_table.current_value) %></strong> de <strong><%= number_to_currency(savings_table.max_value) %></strong>!</p>
     </div>
 
     <!-- Metas do Casal -->
@@ -123,8 +127,10 @@
       <h3 class="text-xl font-bold text-green-400 mb-2 flex items-center gap-2">
         <i class="fas fa-bullseye"></i> Metas do Casal
       </h3>
-      <p class="text-4xl font-bold text-white"><%= total_goals %></p>
-      <p class="text-gray-400 mt-2">Vocês têm <%= total_goals %> metas registradas, sendo:</p>
+      <div class="relative w-full bg-gray-700 h-6 rounded-full mb-4">
+        <div class="absolute top-0 left-0 h-6 rounded-full bg-green-500" style="width: <%= (achieved_goals.to_f / total_goals) * 100 %>%"></div>
+      </div>
+      <p class="text-gray-400">Vocês alcançaram <strong><%= achieved_goals %></strong> de <strong><%= total_goals %></strong> metas!</p>
       <ul class="text-gray-300 mt-2 space-y-2">
         <li>✅ <strong><%= achieved_goals %></strong> metas atingidas.</li>
         <li>⏳ <strong><%= pending_goals %></strong> metas pendentes.</li>
