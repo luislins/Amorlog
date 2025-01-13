@@ -96,6 +96,7 @@ class GoalsController < ApplicationController
       :kind,
       :numeric_value,
       :achieved,
+      :current_value,
       images: []
     )
   end

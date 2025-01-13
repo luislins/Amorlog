@@ -42,6 +42,9 @@
 
               <% if goal.numeric? %>
                 <% progress = ((goal.current_value.to_f / goal.numeric_value.to_f) * 100).round(2) %>
+                <div class="flex justify-end text-sm text-gray-300">
+                  <span class="font-semibold text-white"><%= goal.numeric_value %></span>
+                </div>
                 <div class="w-full bg-gray-600 rounded-full h-4 mb-4">
                   <div class="bg-loveRed h-4 rounded-full" style="width: <%= progress %>%;"></div>
                 </div>
@@ -120,4 +123,24 @@
       <% end %>
     </div>
   </div>
+
+    <!-- Modal -->
+  <div data-goal-modal-target="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">Editar Valor Atual</h2>
+      <%= form_with model: Goal.new, url: "", method: :patch, local: true, data: { goal_modal_target: "form" } do |f| %>
+        <div class="mb-4">
+          <%= f.label :current_value, "Valor Atual", class: "block text-sm font-medium text-gray-700" %>
+          <%= f.number_field :current_value, value: "", step: "0.01", 
+                class: "mt-1 block w-full text-black border-gray-300 rounded-md shadow-sm focus:ring-loveRed focus:border-loveRed sm:text-sm",
+                data: { goal_modal_target: "currentValueField" } %>
+        </div>
+        <div class="flex justify-end">
+          <button data-action="click->goal-modal#close" type="button" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md mr-2">Cancelar</button>
+          <%= f.submit "Salvar", class: "bg-loveRed text-white px-4 py-2 rounded-md font-semibold hover:bg-red-600 transition-all" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  
 </div>
