@@ -10,17 +10,21 @@ class SavingsTablesController < ApplicationController
         format.turbo_stream { render_updated_savings_table }
       end
     else
-      render :show, status: :unprocessable_entity
+      flash[:alert] = @savings_table.errors.full_messages.to_sentence
+      redirect_to couple_goals_path(@couple)
     end
   end
 
   private
+  
 
   def set_savings_table
     @savings_table = @couple.savings_table
   end
 
   def render_updated_savings_table
+    @savings_table.reload
+
     render turbo_stream: [
       turbo_stream.replace(
         "squares_grid",
@@ -36,6 +40,6 @@ class SavingsTablesController < ApplicationController
   end
 
   def savings_table_params
-    params.require(:savings_table).permit(:max_value, :max_value_per_square)
+    params.require(:savings_table).permit(:max_value)
   end
 end

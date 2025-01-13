@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_03_203918) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_13_222450) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -90,6 +90,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_03_203918) do
     t.datetime "updated_at", null: false
     t.integer "couple_id", null: false
     t.integer "max_value_per_square"
+    t.integer "min_value_per_square"
     t.index ["couple_id"], name: "index_savings_tables_on_couple_id"
   end
 

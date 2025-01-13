@@ -1,9 +1,10 @@
 <turbo-frame id="squares_grid">
-    <div id="savings-grid" class="grid grid-cols-10 gap-3 p-4 bg-gray-900 rounded-lg shadow-inner overflow-hidden">
+    <div id="savings-grid" class="grid grid-cols-10 gap-3 p-4 bg-gray-900 rounded-lg shadow-xl">
         <% savings_table.savings_table_squares.each do |square| %>
         <div 
-            class="w-12 h-12 flex items-center justify-center rounded-md font-bold cursor-pointer transition-all 
-            <%= square.checked ? 'bg-loveRed text-white' : 'bg-gray-700 text-white' %>" 
+            class="w-12 h-12 flex items-center justify-center rounded-md font-semibold cursor-pointer 
+                   transition-all transform hover:scale-105 
+                   <%= square.checked ? 'bg-loveRed text-white shadow-lg' : 'bg-gray-700 text-gray-300 hover:bg-gray-600' %>"
             data-action="click->savings-table-squares#toggleChecked" 
             data-id="<%= square.id %>" 
             data-checked="<%= square.checked %>">
@@ -12,4 +13,3 @@
         <% end %>
     </div>
 </turbo-frame>
-

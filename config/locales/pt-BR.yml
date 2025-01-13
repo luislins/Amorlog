@@ -31,6 +31,9 @@ pt-BR:
         numeric_value: "Valor numérico"
         due_date: "Data de vencimento"
         title: "Título"
+      savings_table:
+        max_value: "Valor máximo"
+        max_value_per_square: "Valor máximo por quadrado"  
     models:
       user:
         one: "Usuário"
@@ -55,6 +58,19 @@ pt-BR:
               too_short: "A senha é muito curta (mínimo de %{count} caracteres)"
             password_confirmation:
               confirmation: "As senhas precisam ser iguais. Verifique e tente novamente."
+        savings_table:
+          attributes:
+            max_value:
+              less_than: "deve ser menor que %{count}"
+              greater_than: "deve ser maior que %{count}"
+            max_value_per_square:
+              greater_than: "deve ser maior que %{count}"
+              less_than: "deve ser menor que %{count}"
+  support:
+    array:
+      words_connector: " e "
+      two_words_connector: " e "
+      last_word_connector: " e "                    
 
   devise:
     sessions:
