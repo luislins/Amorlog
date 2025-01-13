@@ -6,7 +6,7 @@ export default class extends Controller {
 
   connect() {
     if (this.autoHideValue) {
-      this.timeout = setTimeout(() => this.close(), this.hideAfterValue || 5000);
+      this.timeout = setTimeout(() => this.close(), 300000);
     }
   }
 

@@ -1,22 +1,22 @@
-<div class="container mx-auto mt-4 px-4">
+<div class="fixed bottom-4 right-4 space-y-4 z-50">
   <% flash.each do |type, opts| %>
     <% message = opts.is_a?(Hash) ? opts[:message] : opts %>
-    <% dismissible = opts.is_a?(Hash) ? opts.fetch(:dismissible, true) : true %>
-    <% auto_hide = opts.is_a?(Hash) ? opts.fetch(:auto_hide, true) : false %>
+    <% dismissible = true %>
+    <% auto_hide = true %>
     <% css_classes, icon =
       case type.to_sym
-      when :notice then ["bg-green-600", "fas fa-check-circle"]
-      when :alert then ["bg-red-600", "fas fa-exclamation-circle"]
+      when :notice then ["bg-green-500", "fas fa-check-circle"]
+      when :alert then ["bg-red-500", "fas fa-exclamation-circle"]
       else ["bg-gray-600", "fas fa-bell"]
       end %>
     <div
       data-controller="flash"
       data-flash-auto-hide-value="<%= auto_hide %>"
       data-flash-hide-after-value="5000"
-      class="flash-message <%= css_classes %> text-white p-4 rounded-lg mb-4 shadow-md flex items-center relative"
+      class="flash-message <%= css_classes %> text-white p-4 rounded-lg shadow-lg flex items-center relative animate-slide-in w-96"
       role="alert"
     >
-      <i class="<%= icon %> text-2xl mr-3"></i>
+      <i class="<%= icon %> text-xl mr-3"></i>
       <span class="text-sm"><%= message %></span>
       <% if dismissible %>
         <button
