@@ -17,6 +17,9 @@ class SavingsTableSquaresController < ApplicationController
       format.turbo_stream do
         render turbo_stream: [
           turbo_stream.replace(square, partial: "savings_tables/square", locals: { square: square }),
+          turbo_stream.replace("savings_total", partial: "savings_tables/savings_total", locals: { savings_table: savings_table }),
+          turbo_stream.replace("savings_table_meter", partial: "savings_tables/savings_table_meter", locals: { savings_table: savings_table }),
+          turbo_stream.replace("savings_table_resume", partial: "savings_tables/savings_table_resume", locals: { savings_table: savings_table })
         ]
       end
       format.html { redirect_to savings_table_path(savings_table), notice: "Estado atualizado!" }
