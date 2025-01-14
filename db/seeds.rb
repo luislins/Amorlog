@@ -1,6 +1,6 @@
 # Create users
-user1 = User.create!(email: 'a@gmail.com', password: 'password', password_confirmation: 'password')
-user2 = User.create!(email: 'b@gmail.com', password: 'password', password_confirmation: 'password')
+user1 = User.create!(email: 'a@gmail.com', password: '123456', password_confirmation: '123456')
+user2 = User.create!(email: 'b@gmail.com', password: '123456', password_confirmation: '123456')
 
 # Create couples
 couple1 = Couple.create!(user: user1, partner_1: 'John', partner_2: 'Jane')
@@ -19,8 +19,8 @@ savings_table1.savings_table_squares.create!(value: 100, checked: false)
 savings_table1.savings_table_squares.create!(value: 200, checked: false)
 
 # Create more users
-user3 = User.create!(email: 'c@gmail.com', password: 'password', password_confirmation: 'password')
-user4 = User.create!(email: 'd@gmail.com', password: 'password', password_confirmation: 'password')
+user3 = User.create!(email: 'c@gmail.com', password: '123456', password_confirmation: '123456')
+user4 = User.create!(email: 'd@gmail.com', password: '123456', password_confirmation: '123456')
 
 # Create couple2
 couple2 = Couple.create!(user: user3, partner_1: 'Bob', partner_2: 'Alice')
