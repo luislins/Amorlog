@@ -35,6 +35,16 @@ class SavingsTablesController < ApplicationController
         "savings_total",
         partial: "savings_total",
         locals: { savings_table: @savings_table }
+      ),
+      turbo_stream.replace(
+        "savings_table_meter",
+        partial: "savings_table_meter",
+        locals: { savings_table: @savings_table }
+      ),
+      turbo_stream.replace(
+        "savings_table_resume",
+        partial: "savings_table_resume",
+        locals: { savings_table: @savings_table }
       )
     ]
   end

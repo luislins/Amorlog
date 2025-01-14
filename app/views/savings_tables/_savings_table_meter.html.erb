@@ -1,13 +1,13 @@
-<div class="goal-meter bg-gray-800 p-6 rounded-lg shadow-lg">
-  <h2 class="text-2xl font-bold text-center text-white mb-4">
-    Meta de Dinheiro
-  </h2>
-  <div class="meter-wrapper relative h-8 bg-gray-700 rounded-full overflow-hidden shadow-inner">
-    <div class="meter-bar bg-loveRed h-full transition-all duration-300" style="width: <%= (@savings_table.current_value.to_f / @savings_table.max_value * 100).round(2) %>%"></div>
-  </div>
-  <div class="flex justify-between mt-2 text-gray-300 text-sm">
-    <span>R$ <%= @savings_table.current_value %></span>
-    <span>Falta: R$ <%= @savings_table.max_value - @savings_table.current_value %></span>
-    <span>R$ <%= @savings_table.max_value %></span>
-  </div>
-</div>
+<turbo-frame id="savings_table_meter">
+    <div class="flex flex-col items-center bg-gray-700 p-5 rounded-lg shadow-lg w-72 h-40">
+        <h3 class="text-lg font-bold text-loveRed mb-3">Progresso Atual:</h3>
+        <div class="relative w-full bg-gray-800 h-6 rounded-full">
+            <div class="absolute top-0 left-0 h-6 rounded-full bg-blue-500" 
+                style="width: <%= (savings_table.current_value.to_f / savings_table.max_value) * 100 %>%"></div>
+        </div>
+        <p class="text-gray-300 mt-5 text-sm">
+            <strong><%= number_to_currency(savings_table.current_value) %></strong> economizados de 
+            <strong><%= number_to_currency(savings_table.max_value) %></strong>.
+        </p>
+    </div>
+</turbo-frame>

@@ -13,6 +13,7 @@ class SavingsTable < ApplicationRecord
   
   after_create :generate_squares
   after_update :generate_squares, if: -> { saved_change_to_attribute?(:max_value) || saved_change_to_attribute?(:max_value_per_square) }
+  after_update :reset_values, if: -> { saved_change_to_attribute?(:max_value) }
 
   private
 
@@ -55,5 +56,8 @@ class SavingsTable < ApplicationRecord
     SavingsTableSquare.insert_all!(squares_data) if squares_data.any?
   end
   
+  def reset_values
+    update(current_value: 0)
+  end
 
 end
