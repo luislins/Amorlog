@@ -1,63 +1,41 @@
-# Limpando o banco de dados
-ActiveStorage::Attachment.delete_all
-ActiveStorage::Blob.delete_all
-Goal.delete_all
-Event.delete_all
-Couple.delete_all
-User.delete_all
+# Create users
+user1 = User.create!(email: 'a@gmail.com', password: 'password', password_confirmation: 'password')
+user2 = User.create!(email: 'b@gmail.com', password: 'password', password_confirmation: 'password')
 
-# Criando usuário principal
-user = User.create!(
-  email: 'a@gmail.com',
-  password: '123456',
-  password_confirmation: '123456'
-)
+# Create couples
+couple1 = Couple.create!(user: user1, partner_1: 'John', partner_2: 'Jane')
 
-# Criando casal
-couple = Couple.create!(
-  user: user,
-  partner_1: 'Alice',
-  partner_2: 'Bob'
-)
+# Create events for couple1
+Event.create!(couple: couple1, title: 'Anniversary', description: 'Celebrating 1 year together', date: '2025-06-01', event_type: 'Celebration')
+Event.create!(couple: couple1, title: 'Vacation', description: 'Trip to Paris', date: '2025-08-15', event_type: 'Trip')
 
-# Criando eventos
-5.times do |i|
-  Event.create!(
-    couple: couple,
-    title: "Evento #{i + 1}",
-    description: "Descrição para o evento #{i + 1}",
-    date: Date.today + i * 10,
-    event_type: ['Pessoal', 'Aniversário', 'Feriado'].sample
-  )
-end
+# Create goals for couple1
+Goal.create!(couple: couple1, title: 'Save for honeymoon', description: 'Save $5000 for honeymoon in Paris', due_date: '2025-07-01', kind: 0, numeric_value: 5000, current_value: 1000)
+Goal.create!(couple: couple1, title: 'Run a marathon', description: 'Train and run a marathon together', due_date: '2025-11-01', kind: 0)
 
-# Criando metas
-5.times do |i|
-    kind = [0, 1].sample # 0 para numeric, 1 para boolean
-    numeric_value = kind == 0 ? rand(100..1000) : nil
-    current_value = if kind == 0
-                      rand(0..(numeric_value || 1))
-                    else
-                      0 # Define como 0 para boolean ou um valor padrão válido
-                    end
-  
-    begin
-      Goal.create!(
-        couple: couple,
-        title: "Meta #{i + 1}",
-        description: "Descrição para a meta #{i + 1}",
-        due_date: Date.today + i * 30,
-        achieved: kind == 1 ? [true, false].sample : false,
-        kind: kind,
-        numeric_value: numeric_value,
-        current_value: current_value
-      )
-    rescue ActiveRecord::RecordInvalid => e
-      puts "Erro ao criar meta #{i + 1}: #{e.message}"
-      puts "Detalhes: #{e.record.errors.full_messages.join(', ')}"
-    end
-  end
-  
-  
+# Create savings tables for couple1
+savings_table1 = SavingsTable.create!(couple: couple1, current_value: 1000, max_value: 5000, max_value_per_square: 100, min_value_per_square: 50)
+savings_table1.savings_table_squares.create!(value: 100, checked: false)
+savings_table1.savings_table_squares.create!(value: 200, checked: false)
 
-puts "Database seeded successfully with dummy data."
+# Create more users
+user3 = User.create!(email: 'c@gmail.com', password: 'password', password_confirmation: 'password')
+user4 = User.create!(email: 'd@gmail.com', password: 'password', password_confirmation: 'password')
+
+# Create couple2
+couple2 = Couple.create!(user: user3, partner_1: 'Bob', partner_2: 'Alice')
+
+# Create events for couple2
+Event.create!(couple: couple2, title: 'Wedding', description: 'Our beautiful wedding day', date: '2025-05-20', event_type: 'Wedding')
+Event.create!(couple: couple2, title: 'Move-in', description: 'We moved in together', date: '2025-01-15', event_type: 'Milestone')
+
+# Create goals for couple2
+Goal.create!(couple: couple2, title: 'Buy a house', description: 'Save for a down payment', due_date: '2025-12-01', kind: 0, numeric_value: 20000, current_value: 5000)
+Goal.create!(couple: couple2, title: 'Learn a new language', description: 'Take a French course together', due_date: '2025-06-01', kind: 0)
+
+# Create savings tables for couple2
+savings_table2 = SavingsTable.create!(couple: couple2, current_value: 2000, max_value: 10000, max_value_per_square: 200, min_value_per_square: 100)
+savings_table2.savings_table_squares.create!(value: 100, checked: true)
+savings_table2.savings_table_squares.create!(value: 200, checked: false)
+
+puts "Seed data created successfully!"

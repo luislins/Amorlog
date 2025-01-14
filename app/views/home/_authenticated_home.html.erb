@@ -108,15 +108,14 @@
     </div>
 
     <!-- Progresso Financeiro -->
-    <% savings_table = current_user.couple.savings_table %>
     <div class="p-6 bg-gray-800 rounded-lg shadow-md content-center">
       <h3 class="text-xl font-bold text-blue-400 mb-2 flex items-center gap-2">
         <i class="fas fa-dollar-sign"></i> Progresso Financeiro
       </h3>
       <div class="relative w-full bg-gray-700 h-6 rounded-full mb-4">
-        <div class="absolute top-0 left-0 h-6 rounded-full bg-blue-500" style="width: <%= (savings_table.current_value.to_f / savings_table.max_value) * 100 %>%"></div>
+        <div class="absolute top-0 left-0 h-6 rounded-full bg-blue-500" style="width: <%= (@savings_table.current_value.to_f / @savings_table.max_value) * 100 %>%"></div>
       </div>
-      <p class="text-gray-400">Vocês economizaram <strong><%= number_to_currency(savings_table.current_value) %></strong> de <strong><%= number_to_currency(savings_table.max_value) %></strong>!</p>
+      <p class="text-gray-400">Vocês economizaram <strong><%= number_to_currency(@savings_table.current_value) %></strong> de <strong><%= number_to_currency(@savings_table.max_value) %></strong>!</p>
     </div>
 
     <!-- Metas do Casal -->

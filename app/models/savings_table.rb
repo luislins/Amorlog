@@ -5,8 +5,9 @@ class SavingsTable < ApplicationRecord
   MAX_VALUE_PER_SQUARE = 500
   MIN_VALUE_PER_SQUARE = 5
 
-  validates :max_value, presence: true, numericality: { greater_than: 0, less_than_or_equal: MAX_VALUE }
-  validates :max_value_per_square, presence: true, numericality: { greater_than: 0, less_than_or_equal: MAX_VALUE_PER_SQUARE }
+  validates :max_value, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal: MAX_VALUE }
+  validates :max_value_per_square, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal: MAX_VALUE_PER_SQUARE }
+  validates :max_value_per_square, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   has_many :savings_table_squares, dependent: :destroy
   

@@ -8,6 +8,7 @@ class Couple < ApplicationRecord
   validates :partner_1, :partner_2, presence: true
 
   before_validation :generate_slug
+  after_create :create_saving_table
 
   # override id -> slug
   def to_param
@@ -37,6 +38,10 @@ class Couple < ApplicationRecord
     end
   
     self.slug = new_slug
+  end
+
+  def create_saving_table
+    SavingsTable.create(couple: self)
   end
   
 end
