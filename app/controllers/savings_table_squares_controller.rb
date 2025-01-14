@@ -12,9 +12,20 @@ class SavingsTableSquaresController < ApplicationController
     total_checked = savings_table.savings_table_squares.where(checked: true).sum(:value)
     savings_table.update(current_value: total_checked)
 
-    # Retorna resposta JSON com o novo estado
+    # Responde com Turbo Stream para atualizar os elementos relevantes
     respond_to do |format|
-      format.json { render json: { success: true, checked: square.checked, new_total: total_checked } }
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace(square, partial: "savings_tables/square", locals: { square: square }),
+        ]
+      end
+      format.html { redirect_to savings_table_path(savings_table), notice: "Estado atualizado!" }
     end
+  end
+
+  private
+
+  def set_couple
+    @couple = current_user.couple
   end
 end

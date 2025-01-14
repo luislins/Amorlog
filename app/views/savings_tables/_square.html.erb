@@ -1,0 +1,5 @@
+<turbo-frame id="<%= dom_id(square) %>">
+        <%= link_to toggle_checked_savings_table_square_path(square),  data: { turbo_method: :patch }, class: "w-12 h-12 flex items-center justify-center rounded-md font-semibold cursor-pointer transition-all transform hover:scale-105 #{square.checked ? 'bg-loveRed text-white shadow-lg' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'}" do %>
+          <%= square.value %>
+        <% end %>
+      </turbo-frame>
